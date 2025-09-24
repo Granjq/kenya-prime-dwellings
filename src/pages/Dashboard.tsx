@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { StatsSection } from "@/components/StatsSection";
+import { BestAgentsSection } from "@/components/BestAgentsSection";
 import { PropertyFilters } from "@/components/PropertyFilters";
 import { PropertyCard } from "@/components/PropertyCard";
 import { Home } from "lucide-react";
@@ -139,6 +140,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-background">
       <DashboardHeader />
       <StatsSection />
+      <BestAgentsSection />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-8">

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { MapPin, TrendingUp, DollarSign } from "lucide-react";
 
 interface Location {
@@ -129,15 +128,6 @@ const categoryLabels = {
 
 export function BestLocationsSection() {
   const [activeCategory, setActiveCategory] = useState<keyof typeof locationData>("rent");
-  const [isToggled, setIsToggled] = useState(false);
-
-  const handleToggle = () => {
-    setIsToggled(!isToggled);
-    const categories = Object.keys(locationData) as Array<keyof typeof locationData>;
-    const currentIndex = categories.indexOf(activeCategory);
-    const nextIndex = (currentIndex + 1) % categories.length;
-    setActiveCategory(categories[nextIndex]);
-  };
 
   const currentLocations = locationData[activeCategory];
 
@@ -145,23 +135,25 @@ export function BestLocationsSection() {
     <section className="py-16 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <Label htmlFor="location-toggle" className="text-lg font-medium">
-              {categoryLabels[activeCategory]}
-            </Label>
-            <Switch
-              id="location-toggle"
-              checked={isToggled}
-              onCheckedChange={handleToggle}
-              className="data-[state=checked]:bg-primary"
-            />
-          </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Top Locations in Nairobi
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
             Discover the most sought-after areas based on market trends and property performance
           </p>
+          
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            {Object.entries(categoryLabels).map(([key, label]) => (
+              <Button
+                key={key}
+                variant={activeCategory === key ? "default" : "outline"}
+                onClick={() => setActiveCategory(key as keyof typeof locationData)}
+                className="px-6 py-2"
+              >
+                {label}
+              </Button>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

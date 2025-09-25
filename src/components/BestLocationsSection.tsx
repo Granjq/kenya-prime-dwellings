@@ -3,6 +3,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, TrendingUp, DollarSign } from "lucide-react";
 
+// Import images
+import apartmentWestlands from "@/assets/apartment-westlands.jpg";
+import apartmentKilimani from "@/assets/apartment-kilimani.jpg";
+import apartmentParklands from "@/assets/apartment-parklands.jpg";
+import bungalowKaren from "@/assets/bungalow-karen.jpg";
+import houseRunda from "@/assets/house-runda.jpg";
+import villaLavington from "@/assets/villa-lavington.jpg";
+import hotelCBD from "@/assets/hotel-cbd-nairobi.jpg";
+import hotelGigiri from "@/assets/hotel-gigiri.jpg";
+import apartmentRiverside from "@/assets/apartment-riverside.jpg";
+import houseSyokimau from "@/assets/house-syokimau.jpg";
+import houseKiambu from "@/assets/house-kiambu.jpg";
+import houseThikaRoad from "@/assets/house-thika-road.jpg";
+
 interface Location {
   id: string;
   name: string;
@@ -10,6 +24,7 @@ interface Location {
   growth: string;
   properties: number;
   description: string;
+  image: string;
 }
 
 const locationData = {
@@ -20,7 +35,8 @@ const locationData = {
       averagePrice: "KSh 35,000/month",
       growth: "+12%",
       properties: 156,
-      description: "Prime business district with modern amenities"
+      description: "Prime business district with modern amenities",
+      image: apartmentWestlands
     },
     {
       id: "2",
@@ -28,7 +44,8 @@ const locationData = {
       averagePrice: "KSh 42,000/month",
       growth: "+18%",
       properties: 89,
-      description: "Vibrant neighborhood with excellent connectivity"
+      description: "Vibrant neighborhood with excellent connectivity",
+      image: apartmentKilimani
     },
     {
       id: "3",
@@ -36,7 +53,8 @@ const locationData = {
       averagePrice: "KSh 28,000/month",
       growth: "+8%",
       properties: 134,
-      description: "Peaceful residential area with good schools"
+      description: "Peaceful residential area with good schools",
+      image: apartmentParklands
     }
   ],
   sell: [
@@ -46,7 +64,8 @@ const locationData = {
       averagePrice: "KSh 25M",
       growth: "+15%",
       properties: 67,
-      description: "Exclusive suburb with luxury properties"
+      description: "Exclusive suburb with luxury properties",
+      image: bungalowKaren
     },
     {
       id: "5",
@@ -54,7 +73,8 @@ const locationData = {
       averagePrice: "KSh 32M",
       growth: "+22%",
       properties: 43,
-      description: "Upscale residential with diplomatic presence"
+      description: "Upscale residential with diplomatic presence",
+      image: houseRunda
     },
     {
       id: "6",
@@ -62,7 +82,8 @@ const locationData = {
       averagePrice: "KSh 28M",
       growth: "+19%",
       properties: 78,
-      description: "Prestigious location with green spaces"
+      description: "Prestigious location with green spaces",
+      image: villaLavington
     }
   ],
   shortStay: [
@@ -72,7 +93,8 @@ const locationData = {
       averagePrice: "KSh 8,500/night",
       growth: "+25%",
       properties: 92,
-      description: "Central location perfect for business travelers"
+      description: "Central location perfect for business travelers",
+      image: hotelCBD
     },
     {
       id: "8",
@@ -80,7 +102,8 @@ const locationData = {
       averagePrice: "KSh 12,000/night",
       growth: "+30%",
       properties: 34,
-      description: "Diplomatic quarter with premium accommodations"
+      description: "Diplomatic quarter with premium accommodations",
+      image: hotelGigiri
     },
     {
       id: "9",
@@ -88,7 +111,8 @@ const locationData = {
       averagePrice: "KSh 6,800/night",
       growth: "+14%",
       properties: 56,
-      description: "Modern area with shopping and entertainment"
+      description: "Modern area with shopping and entertainment",
+      image: apartmentRiverside
     }
   ],
   buy: [
@@ -98,7 +122,8 @@ const locationData = {
       averagePrice: "KSh 8.5M",
       growth: "+28%",
       properties: 187,
-      description: "Fast-growing area near the airport"
+      description: "Fast-growing area near the airport",
+      image: houseSyokimau
     },
     {
       id: "11",
@@ -106,7 +131,8 @@ const locationData = {
       averagePrice: "KSh 6.2M",
       growth: "+24%",
       properties: 203,
-      description: "Affordable options with great potential"
+      description: "Affordable options with great potential",
+      image: houseKiambu
     },
     {
       id: "12",
@@ -114,7 +140,8 @@ const locationData = {
       averagePrice: "KSh 7.8M",
       growth: "+32%",
       properties: 145,
-      description: "Rapidly developing corridor with infrastructure"
+      description: "Rapidly developing corridor with infrastructure",
+      image: houseThikaRoad
     }
   ]
 };
@@ -160,9 +187,22 @@ export function BestLocationsSection() {
           {currentLocations.map((location, index) => (
             <Card 
               key={location.id} 
-              className="group hover:shadow-lg transition-all duration-300 animate-fade-in border-border/50"
+              className="group hover:shadow-lg transition-all duration-300 animate-fade-in border-border/50 overflow-hidden"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={location.image} 
+                  alt={`${location.name} property`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md">
+                  <span className="text-sm font-semibold text-green-600 flex items-center gap-1">
+                    <TrendingUp className="w-3 h-3" />
+                    {location.growth}
+                  </span>
+                </div>
+              </div>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
@@ -183,14 +223,6 @@ export function BestLocationsSection() {
                     <span className="text-lg font-bold text-foreground flex items-center gap-1">
                       <DollarSign className="w-4 h-4" />
                       {location.averagePrice}
-                    </span>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-muted-foreground">Growth Rate</span>
-                    <span className="text-sm font-semibold text-green-600 flex items-center gap-1">
-                      <TrendingUp className="w-4 h-4" />
-                      {location.growth}
                     </span>
                   </div>
                   

@@ -3,6 +3,7 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { StatsSection } from "@/components/StatsSection";
 import { BestAgentsSection } from "@/components/BestAgentsSection";
 import { BestLocationsSection } from "@/components/BestLocationsSection";
+import { NewsBlogSection } from "@/components/NewsBlogSection";
 import { PropertyFilters } from "@/components/PropertyFilters";
 import { PropertyCard } from "@/components/PropertyCard";
 import { Home } from "lucide-react";
@@ -186,6 +187,7 @@ export default function Dashboard() {
       
       <BestAgentsSection />
       <BestLocationsSection />
+      <NewsBlogSection />
     </div>
   );
 }

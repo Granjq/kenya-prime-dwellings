@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { StatsSection } from "@/components/StatsSection";
 import { BestAgentsSection } from "@/components/BestAgentsSection";
+import { BestLocationsSection } from "@/components/BestLocationsSection";
 import { PropertyFilters } from "@/components/PropertyFilters";
 import { PropertyCard } from "@/components/PropertyCard";
 import { Home } from "lucide-react";
@@ -184,6 +185,7 @@ export default function Dashboard() {
       </main>
       
       <BestAgentsSection />
+      <BestLocationsSection />
     </div>
   );
 }

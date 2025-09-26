@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { TopHeaderBar } from "@/components/TopHeaderBar";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { StatsSection } from "@/components/StatsSection";
 import { BestAgentsSection } from "@/components/BestAgentsSection";
@@ -152,6 +153,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
+      <TopHeaderBar />
       <DashboardHeader />
       <StatsSection />
       

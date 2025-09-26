@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface BlogPost {
   id: string;
@@ -77,6 +79,8 @@ const mockBlogPosts: BlogPost[] = [
 ];
 
 export function NewsBlogSection() {
+  const isMobile = useIsMobile();
+  
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
@@ -85,6 +89,54 @@ export function NewsBlogSection() {
       year: 'numeric' 
     });
   };
+
+  const BlogCard = ({ post, index }: { post: BlogPost; index: number }) => (
+    <Card 
+      className="group hover:shadow-lg transition-all duration-300 cursor-pointer hover-scale animate-scale-in w-full"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
+        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+          <div className="text-4xl font-bold text-primary/40">
+            {post.title.charAt(0)}
+          </div>
+        </div>
+      </div>
+      
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between mb-2">
+          <Badge variant="secondary" className="text-xs">
+            {post.category}
+          </Badge>
+          <div className="flex items-center text-xs text-muted-foreground">
+            <Clock className="w-3 h-3 mr-1" />
+            {post.readTime}
+          </div>
+        </div>
+        
+        <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+          {post.title}
+        </h3>
+      </CardHeader>
+      
+      <CardContent className="pt-0">
+        <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+          {post.excerpt}
+        </p>
+        
+        <div className="flex items-center justify-between">
+          <div className="flex items-center text-xs text-muted-foreground">
+            <Calendar className="w-3 h-3 mr-1" />
+            <span>{formatDate(post.date)}</span>
+            <span className="mx-2">•</span>
+            <span>{post.author}</span>
+          </div>
+          
+          <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+        </div>
+      </CardContent>
+    </Card>
+  );
 
   return (
     <section className="py-16 bg-muted/30">
@@ -99,56 +151,33 @@ export function NewsBlogSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mockBlogPosts.map((post, index) => (
-            <Card 
-              key={post.id} 
-              className="group hover:shadow-lg transition-all duration-300 cursor-pointer hover-scale animate-scale-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
+        {isMobile ? (
+          <div className="relative">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
             >
-              <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  <div className="text-4xl font-bold text-primary/40">
-                    {post.title.charAt(0)}
-                  </div>
-                </div>
-              </div>
-              
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge variant="secondary" className="text-xs">
-                    {post.category}
-                  </Badge>
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <Clock className="w-3 h-3 mr-1" />
-                    {post.readTime}
-                  </div>
-                </div>
-                
-                <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-              </CardHeader>
-              
-              <CardContent className="pt-0">
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                  {post.excerpt}
-                </p>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <Calendar className="w-3 h-3 mr-1" />
-                    <span>{formatDate(post.date)}</span>
-                    <span className="mx-2">•</span>
-                    <span>{post.author}</span>
-                  </div>
-                  
-                  <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {mockBlogPosts.map((post, index) => (
+                  <CarouselItem key={post.id} className="pl-2 md:pl-4 basis-4/5 sm:basis-3/4">
+                    <BlogCard post={post} index={index} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2" />
+              <CarouselNext className="right-2" />
+            </Carousel>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mockBlogPosts.map((post, index) => (
+              <BlogCard key={post.id} post={post} index={index} />
+            ))}
+          </div>
+        )}
 
         <div className="text-center mt-12 animate-fade-in">
           <button className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">

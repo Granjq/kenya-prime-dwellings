@@ -1,4 +1,6 @@
 import { AgentCard } from "./AgentCard";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Mock data for Kenyan real estate agents
 const topAgents = [
@@ -45,6 +47,17 @@ const topAgents = [
 ];
 
 export function BestAgentsSection() {
+  const isMobile = useIsMobile();
+
+  const AgentCardWrapper = ({ agent, index }: { agent: typeof topAgents[0]; index: number }) => (
+    <div 
+      className="animate-scale-in w-full"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      <AgentCard agent={agent} />
+    </div>
+  );
+
   return (
     <section className="py-16 bg-gradient-to-br from-background to-secondary/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,18 +72,34 @@ export function BestAgentsSection() {
           </p>
         </div>
 
-        {/* Agents Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {topAgents.map((agent, index) => (
-            <div 
-              key={agent.id}
-              className="animate-scale-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
+        {/* Agents Grid/Carousel */}
+        {isMobile ? (
+          <div className="relative">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
             >
-              <AgentCard agent={agent} />
-            </div>
-          ))}
-        </div>
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {topAgents.map((agent, index) => (
+                  <CarouselItem key={agent.id} className="pl-2 md:pl-4 basis-4/5 sm:basis-1/2">
+                    <AgentCardWrapper agent={agent} index={index} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2" />
+              <CarouselNext className="right-2" />
+            </Carousel>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {topAgents.map((agent, index) => (
+              <AgentCardWrapper key={agent.id} agent={agent} index={index} />
+            ))}
+          </div>
+        )}
 
         {/* CTA Section */}
         <div className="mt-16 text-center">

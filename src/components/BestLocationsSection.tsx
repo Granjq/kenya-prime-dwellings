@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, TrendingUp, DollarSign } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Import images
 import apartmentWestlands from "@/assets/apartment-westlands.jpg";
@@ -155,8 +157,71 @@ const categoryLabels = {
 
 export function BestLocationsSection() {
   const [activeCategory, setActiveCategory] = useState<keyof typeof locationData>("rent");
+  const isMobile = useIsMobile();
 
   const currentLocations = locationData[activeCategory];
+
+  const LocationCard = ({ location, index }: { location: Location; index: number }) => (
+    <Card 
+      className="group hover:shadow-lg transition-all duration-300 animate-fade-in border-border/50 overflow-hidden w-full"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      <div className="relative h-48 overflow-hidden">
+        <img 
+          src={location.image} 
+          alt={`${location.name} property`}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md">
+          <span className="text-sm font-semibold text-green-600 flex items-center gap-1">
+            <TrendingUp className="w-3 h-3" />
+            {location.growth}
+          </span>
+        </div>
+      </div>
+      <CardHeader>
+        <div className="flex items-start justify-between">
+          <div>
+            <CardTitle className="text-xl font-semibold text-foreground mb-2 flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-primary" />
+              {location.name}
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">
+              {location.description}
+            </p>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-muted-foreground">Average Price</span>
+            <span className="text-lg font-bold text-foreground flex items-center gap-1">
+              <DollarSign className="w-4 h-4" />
+              {location.averagePrice}
+            </span>
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-muted-foreground">Available Properties</span>
+            <span className="text-sm font-semibold text-foreground">
+              {location.properties} listings
+            </span>
+          </div>
+
+          <div className="pt-2 border-t border-border">
+            <div className="w-full bg-muted rounded-full h-2">
+              <div 
+                className="bg-gradient-to-r from-primary to-primary/80 h-2 rounded-full transition-all duration-500"
+                style={{ width: `${Math.min((parseInt(location.growth.replace('%', '').replace('+', '')) * 3), 100)}%` }}
+              ></div>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">Market performance</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
 
   return (
     <section className="py-16 bg-muted/30">
@@ -183,70 +248,33 @@ export function BestLocationsSection() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentLocations.map((location, index) => (
-            <Card 
-              key={location.id} 
-              className="group hover:shadow-lg transition-all duration-300 animate-fade-in border-border/50 overflow-hidden"
-              style={{ animationDelay: `${index * 0.1}s` }}
+        {isMobile ? (
+          <div className="relative">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
             >
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={location.image} 
-                  alt={`${location.name} property`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md">
-                  <span className="text-sm font-semibold text-green-600 flex items-center gap-1">
-                    <TrendingUp className="w-3 h-3" />
-                    {location.growth}
-                  </span>
-                </div>
-              </div>
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-xl font-semibold text-foreground mb-2 flex items-center gap-2">
-                      <MapPin className="w-5 h-5 text-primary" />
-                      {location.name}
-                    </CardTitle>
-                    <p className="text-sm text-muted-foreground">
-                      {location.description}
-                    </p>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-muted-foreground">Average Price</span>
-                    <span className="text-lg font-bold text-foreground flex items-center gap-1">
-                      <DollarSign className="w-4 h-4" />
-                      {location.averagePrice}
-                    </span>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-muted-foreground">Available Properties</span>
-                    <span className="text-sm font-semibold text-foreground">
-                      {location.properties} listings
-                    </span>
-                  </div>
-
-                  <div className="pt-2 border-t border-border">
-                    <div className="w-full bg-muted rounded-full h-2">
-                      <div 
-                        className="bg-gradient-to-r from-primary to-primary/80 h-2 rounded-full transition-all duration-500"
-                        style={{ width: `${Math.min((parseInt(location.growth.replace('%', '').replace('+', '')) * 3), 100)}%` }}
-                      ></div>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-1">Market performance</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {currentLocations.map((location, index) => (
+                  <CarouselItem key={location.id} className="pl-2 md:pl-4 basis-4/5 sm:basis-3/4">
+                    <LocationCard location={location} index={index} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2" />
+              <CarouselNext className="right-2" />
+            </Carousel>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {currentLocations.map((location, index) => (
+              <LocationCard key={location.id} location={location} index={index} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

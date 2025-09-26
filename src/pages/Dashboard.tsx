@@ -6,6 +6,8 @@ import { BestLocationsSection } from "@/components/BestLocationsSection";
 import { NewsBlogSection } from "@/components/NewsBlogSection";
 import { PropertyFilters } from "@/components/PropertyFilters";
 import { PropertyCard } from "@/components/PropertyCard";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Home } from "lucide-react";
 
 // Import property images
@@ -108,6 +110,7 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
   const [activeType, setActiveType] = useState("all");
+  const isMobile = useIsMobile();
 
   // Filter properties based on search term, status filter, and type filter
   const filteredProperties = useMemo(() => {
@@ -138,6 +141,15 @@ export default function Dashboard() {
 
   const growthCount = filteredProperties.filter(p => p.isHighGrowth).length;
 
+  const PropertyCardWrapper = ({ property, index }: { property: typeof mockProperties[0]; index: number }) => (
+    <div 
+      className="animate-scale-in w-full"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      <PropertyCard property={property} />
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <DashboardHeader />
@@ -157,18 +169,34 @@ export default function Dashboard() {
             growthCount={growthCount}
           />
 
-          {/* Properties Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProperties.map((property, index) => (
-              <div 
-                key={property.id}
-                className="animate-scale-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
+          {/* Properties Grid/Carousel */}
+          {isMobile ? (
+            <div className="relative">
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full"
               >
-                <PropertyCard property={property} />
-              </div>
-            ))}
-          </div>
+                <CarouselContent className="-ml-2 md:-ml-4">
+                  {filteredProperties.map((property, index) => (
+                    <CarouselItem key={property.id} className="pl-2 md:pl-4 basis-4/5 sm:basis-3/4">
+                      <PropertyCardWrapper property={property} index={index} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-2" />
+                <CarouselNext className="right-2" />
+              </Carousel>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProperties.map((property, index) => (
+                <PropertyCardWrapper key={property.id} property={property} index={index} />
+              ))}
+            </div>
+          )}
 
           {/* No Results */}
           {filteredProperties.length === 0 && (

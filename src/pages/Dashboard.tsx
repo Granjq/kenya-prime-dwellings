@@ -4,6 +4,7 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { StatsSection } from "@/components/StatsSection";
 import { BestAgentsSection } from "@/components/BestAgentsSection";
 import { BestLocationsSection } from "@/components/BestLocationsSection";
+import { LandServicesSection } from "@/components/LandServicesSection";
 import { NewsBlogSection } from "@/components/NewsBlogSection";
 import { PropertyFilters } from "@/components/PropertyFilters";
 import { PropertyCard } from "@/components/PropertyCard";
@@ -215,9 +216,10 @@ export default function Dashboard() {
         </div>
       </main>
       
-      <BestAgentsSection />
-      <BestLocationsSection />
-      <NewsBlogSection />
+        <BestAgentsSection />
+        <BestLocationsSection />
+        <LandServicesSection />
+        <NewsBlogSection />
     </div>
   );
 }

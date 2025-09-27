@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { TrendingUp, DollarSign, Users, MapPin, Home, Handshake, Building, Landmark } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { AnimatedCountyText } from "@/components/AnimatedCountyText";
 
 interface LandService {
   id: string;
   name: string;
   icon: any;
+  image: string;
   averagePrice: string;
   growth: string;
   listings: number;
@@ -22,6 +24,7 @@ const landServicesData = {
       id: "1",
       name: "Land Selling",
       icon: Landmark,
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 2.5M/acre",
       growth: "+18%",
       listings: 342,
@@ -32,6 +35,7 @@ const landServicesData = {
       id: "2", 
       name: "Land Buying",
       icon: Home,
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 1.8M/acre",
       growth: "+22%",
       listings: 456,
@@ -42,6 +46,7 @@ const landServicesData = {
       id: "3",
       name: "Land Brokerage", 
       icon: Handshake,
+      image: "/api/placeholder/400/250",
       averagePrice: "3.5% commission",
       growth: "+25%",
       listings: 278,
@@ -52,6 +57,7 @@ const landServicesData = {
       id: "4",
       name: "Land Leasing",
       icon: Building,
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 15K/month",
       growth: "+14%", 
       listings: 189,
@@ -64,6 +70,7 @@ const landServicesData = {
       id: "1",
       name: "Premium Land Selling",
       icon: Landmark,
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 3.2M/acre",
       growth: "+20%",
       listings: 125,
@@ -74,6 +81,7 @@ const landServicesData = {
       id: "5",
       name: "Agricultural Land Sales",
       icon: Landmark,
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 1.8M/acre", 
       growth: "+15%",
       listings: 98,
@@ -84,6 +92,7 @@ const landServicesData = {
       id: "6", 
       name: "Commercial Land Sales",
       icon: Landmark,
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 4.5M/acre",
       growth: "+28%",
       listings: 67,
@@ -96,6 +105,7 @@ const landServicesData = {
       id: "2",
       name: "Investment Land Purchase",
       icon: Home,
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 2.1M/acre",
       growth: "+24%",
       listings: 234,
@@ -106,6 +116,7 @@ const landServicesData = {
       id: "7",
       name: "Residential Land Buying",
       icon: Home, 
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 1.5M/acre",
       growth: "+18%",
       listings: 156,
@@ -116,6 +127,7 @@ const landServicesData = {
       id: "8",
       name: "Industrial Land Purchase", 
       icon: Home,
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 2.8M/acre",
       growth: "+21%",
       listings: 89,
@@ -128,6 +140,7 @@ const landServicesData = {
       id: "3",
       name: "Premium Brokerage",
       icon: Handshake,
+      image: "/api/placeholder/400/250",
       averagePrice: "4% commission", 
       growth: "+30%",
       listings: 145,
@@ -138,6 +151,7 @@ const landServicesData = {
       id: "9",
       name: "Standard Brokerage",
       icon: Handshake,
+      image: "/api/placeholder/400/250",
       averagePrice: "3% commission",
       growth: "+22%",
       listings: 198,
@@ -148,6 +162,7 @@ const landServicesData = {
       id: "10",
       name: "Bulk Land Brokerage",
       icon: Handshake, 
+      image: "/api/placeholder/400/250",
       averagePrice: "2.5% commission",
       growth: "+18%",
       listings: 76,
@@ -160,6 +175,7 @@ const landServicesData = {
       id: "4",
       name: "Agricultural Leasing",
       icon: Building,
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 12K/month",
       growth: "+16%",
       listings: 98,
@@ -170,6 +186,7 @@ const landServicesData = {
       id: "11", 
       name: "Commercial Land Lease",
       icon: Building,
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 25K/month",
       growth: "+19%", 
       listings: 65,
@@ -180,6 +197,7 @@ const landServicesData = {
       id: "12",
       name: "Event Space Leasing",
       icon: Building,
+      image: "/api/placeholder/400/250",
       averagePrice: "KSh 8K/day",
       growth: "+12%",
       listings: 43,
@@ -211,6 +229,19 @@ export function LandServicesSection() {
         className="group hover:shadow-lg transition-all duration-300 animate-fade-in border-border/50 overflow-hidden w-full"
         style={{ animationDelay: `${index * 0.1}s` }}
       >
+        <div className="relative">
+          <img 
+            src={service.image} 
+            alt={service.name}
+            className="w-full h-48 object-cover"
+          />
+          <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md">
+            <span className="text-sm font-semibold text-green-600 flex items-center gap-1">
+              <TrendingUp className="w-3 h-3" />
+              {service.growth}
+            </span>
+          </div>
+        </div>
         <CardHeader>
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
@@ -225,12 +256,6 @@ export function LandServicesSection() {
                   {service.description}
                 </p>
               </div>
-            </div>
-            <div className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md">
-              <span className="text-sm font-semibold text-green-600 flex items-center gap-1">
-                <TrendingUp className="w-3 h-3" />
-                {service.growth}
-              </span>
             </div>
           </div>
         </CardHeader>
@@ -273,7 +298,7 @@ export function LandServicesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Land Services in Kenya
+            Land Services in <AnimatedCountyText />
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
             Comprehensive land solutions for selling, buying, brokerage, and leasing with expert guidance and market insights

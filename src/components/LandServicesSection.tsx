@@ -6,6 +6,16 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { useIsMobile } from "@/hooks/use-mobile";
 import { AnimatedCountyText } from "@/components/AnimatedCountyText";
 
+// Import land service images
+import landSellingImg from "@/assets/villa-lavington.jpg";
+import landBuyingImg from "@/assets/house-nairobi-1.jpg";
+import landBrokerageImg from "@/assets/hotel-cbd-nairobi.jpg";
+import landLeasingImg from "@/assets/bungalow-karen.jpg";
+import agriculturalImg from "@/assets/house-kiambu.jpg";
+import commercialImg from "@/assets/apartment-westlands.jpg";
+import residentialImg from "@/assets/house-runda.jpg";
+import industrialImg from "@/assets/house-thika-road.jpg";
+
 interface LandService {
   id: string;
   name: string;
@@ -24,7 +34,7 @@ const landServicesData = {
       id: "1",
       name: "Land Selling",
       icon: Landmark,
-      image: "/api/placeholder/400/250",
+      image: landSellingImg,
       averagePrice: "KSh 2.5M/acre",
       growth: "+18%",
       listings: 342,
@@ -35,7 +45,7 @@ const landServicesData = {
       id: "2", 
       name: "Land Buying",
       icon: Home,
-      image: "/api/placeholder/400/250",
+      image: landBuyingImg,
       averagePrice: "KSh 1.8M/acre",
       growth: "+22%",
       listings: 456,
@@ -46,7 +56,7 @@ const landServicesData = {
       id: "3",
       name: "Land Brokerage", 
       icon: Handshake,
-      image: "/api/placeholder/400/250",
+      image: landBrokerageImg,
       averagePrice: "3.5% commission",
       growth: "+25%",
       listings: 278,
@@ -57,7 +67,7 @@ const landServicesData = {
       id: "4",
       name: "Land Leasing",
       icon: Building,
-      image: "/api/placeholder/400/250",
+      image: landLeasingImg,
       averagePrice: "KSh 15K/month",
       growth: "+14%", 
       listings: 189,
@@ -70,7 +80,7 @@ const landServicesData = {
       id: "1",
       name: "Premium Land Selling",
       icon: Landmark,
-      image: "/api/placeholder/400/250",
+      image: landSellingImg,
       averagePrice: "KSh 3.2M/acre",
       growth: "+20%",
       listings: 125,
@@ -81,7 +91,7 @@ const landServicesData = {
       id: "5",
       name: "Agricultural Land Sales",
       icon: Landmark,
-      image: "/api/placeholder/400/250",
+      image: agriculturalImg,
       averagePrice: "KSh 1.8M/acre", 
       growth: "+15%",
       listings: 98,
@@ -92,7 +102,7 @@ const landServicesData = {
       id: "6", 
       name: "Commercial Land Sales",
       icon: Landmark,
-      image: "/api/placeholder/400/250",
+      image: commercialImg,
       averagePrice: "KSh 4.5M/acre",
       growth: "+28%",
       listings: 67,
@@ -105,7 +115,7 @@ const landServicesData = {
       id: "2",
       name: "Investment Land Purchase",
       icon: Home,
-      image: "/api/placeholder/400/250",
+      image: landBuyingImg,
       averagePrice: "KSh 2.1M/acre",
       growth: "+24%",
       listings: 234,
@@ -116,7 +126,7 @@ const landServicesData = {
       id: "7",
       name: "Residential Land Buying",
       icon: Home, 
-      image: "/api/placeholder/400/250",
+      image: residentialImg,
       averagePrice: "KSh 1.5M/acre",
       growth: "+18%",
       listings: 156,
@@ -127,7 +137,7 @@ const landServicesData = {
       id: "8",
       name: "Industrial Land Purchase", 
       icon: Home,
-      image: "/api/placeholder/400/250",
+      image: industrialImg,
       averagePrice: "KSh 2.8M/acre",
       growth: "+21%",
       listings: 89,
@@ -140,7 +150,7 @@ const landServicesData = {
       id: "3",
       name: "Premium Brokerage",
       icon: Handshake,
-      image: "/api/placeholder/400/250",
+      image: landBrokerageImg,
       averagePrice: "4% commission", 
       growth: "+30%",
       listings: 145,
@@ -151,7 +161,7 @@ const landServicesData = {
       id: "9",
       name: "Standard Brokerage",
       icon: Handshake,
-      image: "/api/placeholder/400/250",
+      image: commercialImg,
       averagePrice: "3% commission",
       growth: "+22%",
       listings: 198,
@@ -162,7 +172,7 @@ const landServicesData = {
       id: "10",
       name: "Bulk Land Brokerage",
       icon: Handshake, 
-      image: "/api/placeholder/400/250",
+      image: industrialImg,
       averagePrice: "2.5% commission",
       growth: "+18%",
       listings: 76,
@@ -175,7 +185,7 @@ const landServicesData = {
       id: "4",
       name: "Agricultural Leasing",
       icon: Building,
-      image: "/api/placeholder/400/250",
+      image: landLeasingImg,
       averagePrice: "KSh 12K/month",
       growth: "+16%",
       listings: 98,
@@ -186,7 +196,7 @@ const landServicesData = {
       id: "11", 
       name: "Commercial Land Lease",
       icon: Building,
-      image: "/api/placeholder/400/250",
+      image: commercialImg,
       averagePrice: "KSh 25K/month",
       growth: "+19%", 
       listings: 65,
@@ -197,7 +207,7 @@ const landServicesData = {
       id: "12",
       name: "Event Space Leasing",
       icon: Building,
-      image: "/api/placeholder/400/250",
+      image: residentialImg,
       averagePrice: "KSh 8K/day",
       growth: "+12%",
       listings: 43,
@@ -229,11 +239,15 @@ export function LandServicesSection() {
         className="group hover:shadow-lg transition-all duration-300 animate-fade-in border-border/50 overflow-hidden w-full"
         style={{ animationDelay: `${index * 0.1}s` }}
       >
-        <div className="relative">
+        <div className="relative aspect-video overflow-hidden rounded-t-lg">
           <img 
             src={service.image} 
             alt={service.name}
-            className="w-full h-48 object-cover"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            onError={(e) => {
+              e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xNzUgMTAwVjE1MEgyMjVWMTAwSDE3NVoiIGZpbGw9IiM5Q0EzQUYiLz4KPHN2ZyBpZD0iSWNvblNldF9JY29ucF9MaW5lX0NhbWVyYSIgZGF0YS1uYW1lPSJJY29uU2V0L0ljb25wL0xpbmUvQ2FtZXJhIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkgM0gxNUwxNyA1SDIxQTIgMiAwIDAgMSAyMyA3VjE5QTIgMiAwIDAgMSAyMSAyMUgzQTIgMiAwIDAgMSAxIDE5VjdBMiAyIDAgMCAxIDMgNUg3TDkgM1oiIHN0cm9rZT0iIzlDQTNBRiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMyIgcj0iNCIgc3Ryb2tlPSIjOUNBM0FGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K';
+              e.currentTarget.classList.add('bg-muted');
+            }}
           />
           <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md">
             <span className="text-sm font-semibold text-green-600 flex items-center gap-1">

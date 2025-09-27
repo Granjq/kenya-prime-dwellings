@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MapPin, TrendingUp, DollarSign } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { AnimatedCountyText } from "./AnimatedCountyText";
 
 // Import images
 import apartmentWestlands from "@/assets/apartment-westlands.jpg";
@@ -228,7 +229,7 @@ export function BestLocationsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Top Locations in Nairobi
+            Top Locations in <AnimatedCountyText />
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
             Discover the most sought-after areas based on market trends and property performance

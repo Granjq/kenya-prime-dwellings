@@ -68,7 +68,7 @@ export function BuyAbilitySection() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
           {/* Left: Mortgage Calculator Card */}
           <div className="flex h-full">
             <Card className="w-full h-full border border-border/50 shadow-sm hover:shadow-lg transition-all duration-500 bg-card">
@@ -118,7 +118,7 @@ export function BuyAbilitySection() {
           </div>
 
           {/* Right: Property Cards Carousel */}
-          <div className="flex">
+          <div className="flex h-full">
             <Carousel
               opts={{
                 align: "start",
@@ -131,7 +131,7 @@ export function BuyAbilitySection() {
                   stopOnMouseEnter: true,
                 })
               ]}
-              className="w-full"
+              className="w-full h-full flex flex-col"
             >
               <CarouselContent className="-ml-4">
                 {buyAbilityProperties.map((property, index) => (

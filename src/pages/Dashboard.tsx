@@ -4,6 +4,7 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { StatsSection } from "@/components/StatsSection";
 import { BestAgentsSection } from "@/components/BestAgentsSection";
 import { BestLocationsSection } from "@/components/BestLocationsSection";
+import { BuyAbilitySection } from "@/components/BuyAbilitySection";
 import { LandServicesSection } from "@/components/LandServicesSection";
 import { NewsBlogSection } from "@/components/NewsBlogSection";
 import { PropertyFilters } from "@/components/PropertyFilters";
@@ -218,6 +219,7 @@ export default function Dashboard() {
       
         <BestAgentsSection />
         <BestLocationsSection />
+        <BuyAbilitySection />
         <LandServicesSection />
         <NewsBlogSection />
     </div>

@@ -68,9 +68,9 @@ export function BuyAbilitySection() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left: Mortgage Calculator Card */}
-          <div className="lg:col-span-5">
+          <div className="flex">
             <Card className="h-full border border-border/50 shadow-sm hover:shadow-lg transition-all duration-500 bg-card">
               <CardContent className="p-8 space-y-8">
                 {/* Logo Header */}
@@ -118,7 +118,7 @@ export function BuyAbilitySection() {
           </div>
 
           {/* Right: Property Cards Carousel */}
-          <div className="lg:col-span-7">
+          <div className="flex">
             <Carousel
               opts={{
                 align: "start",

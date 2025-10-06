@@ -70,9 +70,9 @@ export function BuyAbilitySection() {
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left: Mortgage Calculator Card */}
-          <div className="flex">
-            <Card className="h-full border border-border/50 shadow-sm hover:shadow-lg transition-all duration-500 bg-card">
-              <CardContent className="p-8 space-y-8">
+          <div className="flex h-full">
+            <Card className="w-full h-full border border-border/50 shadow-sm hover:shadow-lg transition-all duration-500 bg-card">
+              <CardContent className="p-8 space-y-8 flex flex-col h-full justify-between">
                 {/* Logo Header */}
                 <div className="flex items-center gap-3 pb-6 border-b border-border/50">
                   <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center">

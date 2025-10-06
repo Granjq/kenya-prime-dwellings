@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Home, TrendingUp } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 
 // Import property images
 import houseThikaRoad from "@/assets/house-thika-road.jpg";
@@ -54,62 +55,61 @@ export function BuyAbilitySection() {
   const isMobile = useIsMobile();
 
   return (
-    <section className="w-full py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
+    <section className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+        <div className="text-center mb-16 animate-fade-in">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">
             Know Your BuyAbility
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto font-light">
             Discover what you can afford and explore properties within your budget
           </p>
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Left: Mortgage Calculator Card */}
-          <div className="lg:col-span-4">
-            <Card className="h-full shadow-lg hover:shadow-xl transition-shadow duration-300 border-primary/10">
-              <CardContent className="p-6 space-y-6">
+          <div className="lg:col-span-5">
+            <Card className="h-full border border-border/50 shadow-sm hover:shadow-lg transition-all duration-500 bg-card">
+              <CardContent className="p-8 space-y-8">
                 {/* Logo Header */}
-                <div className="flex items-center gap-2 pb-4 border-b border-border">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Home className="w-4 h-4 text-primary" />
+                <div className="flex items-center gap-3 pb-6 border-b border-border/50">
+                  <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center">
+                    <Home className="w-5 h-5 text-primary" />
                   </div>
-                  <span className="font-semibold text-foreground">PropertyHub Loans</span>
+                  <span className="font-medium text-foreground text-lg">PropertyHub Loans</span>
                 </div>
 
                 {/* Data Rows */}
-                <div className="space-y-4">
-                  <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">Suggested target price</p>
-                    <p className="text-2xl font-bold text-foreground">KSh 12,500,000</p>
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground font-medium">Suggested target price</p>
+                    <p className="text-3xl font-bold text-foreground tracking-tight">KSh 12,500,000</p>
                   </div>
 
-                  <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">Monthly payment</p>
-                    <p className="text-2xl font-bold text-foreground">KSh 95,750</p>
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground font-medium">Monthly payment</p>
+                    <p className="text-3xl font-bold text-foreground tracking-tight">KSh 95,750</p>
                   </div>
 
-                  <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">Today's rate / APR</p>
-                    <p className="text-2xl font-bold text-primary">12.5% / 13.2%</p>
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground font-medium">Today's rate / APR</p>
+                    <p className="text-3xl font-bold text-primary tracking-tight">12.5% / 13.2%</p>
                   </div>
                 </div>
 
                 {/* CTA Button */}
                 <Button 
-                  className="w-full h-12 text-base font-semibold shadow-md hover:shadow-lg transition-all duration-300"
-                  style={{ backgroundColor: "hsl(211, 100%, 45%)" }}
+                  className="w-full h-14 text-base font-semibold shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 bg-primary hover:bg-primary/90"
                 >
                   Let's get started
                 </Button>
 
                 {/* Info Badge */}
-                <div className="flex items-start gap-2 p-3 bg-accent/50 rounded-lg">
-                  <TrendingUp className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  <p className="text-xs text-muted-foreground">
+                <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-xl">
+                  <TrendingUp className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     Pre-qualify in minutes with no impact to your credit score
                   </p>
                 </div>
@@ -117,33 +117,32 @@ export function BuyAbilitySection() {
             </Card>
           </div>
 
-          {/* Right: Property Cards */}
-          <div className="lg:col-span-8">
-            {isMobile ? (
-              <Carousel
-                opts={{
-                  align: "start",
-                  loop: true,
-                }}
-                className="w-full"
-              >
-                <CarouselContent className="-ml-2 md:-ml-4">
-                  {buyAbilityProperties.map((property, index) => (
-                    <CarouselItem key={property.id} className="pl-2 md:pl-4 basis-4/5 sm:basis-1/2">
-                      <PropertyCardItem property={property} index={index} />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-2" />
-                <CarouselNext className="right-2" />
-              </Carousel>
-            ) : (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-4">
+          {/* Right: Property Cards Carousel */}
+          <div className="lg:col-span-7">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 5000,
+                  stopOnInteraction: true,
+                  stopOnMouseEnter: true,
+                })
+              ]}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-4">
                 {buyAbilityProperties.map((property, index) => (
-                  <PropertyCardItem key={property.id} property={property} index={index} />
+                  <CarouselItem key={property.id} className="pl-4 md:basis-1/2">
+                    <PropertyCardItem property={property} index={index} />
+                  </CarouselItem>
                 ))}
-              </div>
-            )}
+              </CarouselContent>
+              <CarouselPrevious className="left-0 -translate-x-1/2 bg-background/95 backdrop-blur-sm hover:bg-background shadow-lg border-border/50" />
+              <CarouselNext className="right-0 translate-x-1/2 bg-background/95 backdrop-blur-sm hover:bg-background shadow-lg border-border/50" />
+            </Carousel>
           </div>
         </div>
       </div>
@@ -160,21 +159,21 @@ function PropertyCardItem({
 }) {
   return (
     <Card 
-      className="overflow-hidden border border-border hover:shadow-xl transition-all duration-300 hover:scale-[1.02] animate-fade-in group cursor-pointer"
+      className="overflow-hidden border border-border/50 hover:shadow-2xl transition-all duration-500 hover:scale-[1.03] hover:-translate-y-1 animate-fade-in group cursor-pointer bg-card"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       {/* Image Container */}
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <div className="relative aspect-[16/9] overflow-hidden bg-muted">
         <img
           src={property.image}
           alt={property.location}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
           loading="lazy"
         />
         {/* Badge Overlay */}
-        <div className="absolute top-3 left-3">
+        <div className="absolute top-4 left-4">
           <Badge 
-            className="px-3 py-1 text-xs font-semibold shadow-md"
+            className="px-3 py-1.5 text-xs font-semibold shadow-lg backdrop-blur-sm"
             style={{ 
               backgroundColor: "hsl(24, 100%, 50%)", 
               color: "white",
@@ -187,30 +186,30 @@ function PropertyCardItem({
       </div>
 
       {/* Content */}
-      <CardContent className="p-4 space-y-3">
+      <CardContent className="p-5 space-y-4">
         {/* Price */}
-        <div className="space-y-1">
-          <p className="text-xl font-bold text-foreground">{property.price}</p>
-          <p className="text-sm text-muted-foreground">{property.location}</p>
+        <div className="space-y-1.5">
+          <p className="text-2xl font-bold text-foreground tracking-tight">{property.price}</p>
+          <p className="text-sm text-muted-foreground font-medium">{property.location}</p>
         </div>
 
-        {/* Features - Skeleton bars for visual consistency */}
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <span className="flex items-center gap-1">
-            <span className="font-medium">{property.beds}</span> beds
+        {/* Features */}
+        <div className="flex items-center gap-5 text-sm text-muted-foreground">
+          <span className="flex items-center gap-1.5">
+            <span className="font-semibold text-foreground">{property.beds}</span> beds
           </span>
-          <span className="flex items-center gap-1">
-            <span className="font-medium">{property.baths}</span> baths
+          <span className="flex items-center gap-1.5">
+            <span className="font-semibold text-foreground">{property.baths}</span> baths
           </span>
-          <span className="flex items-center gap-1">
-            <span className="font-medium">{property.sqm}</span> sqm
+          <span className="flex items-center gap-1.5">
+            <span className="font-semibold text-foreground">{property.sqm}</span> sqm
           </span>
         </div>
 
         {/* Placeholder Text Bars */}
-        <div className="space-y-2 pt-2">
-          <div className="h-2 bg-muted rounded-full w-full" />
-          <div className="h-2 bg-muted rounded-full w-3/4" />
+        <div className="space-y-2.5 pt-2">
+          <div className="h-2 bg-muted/60 rounded-full w-full" />
+          <div className="h-2 bg-muted/60 rounded-full w-3/4" />
         </div>
       </CardContent>
     </Card>

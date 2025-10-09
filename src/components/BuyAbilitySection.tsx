@@ -97,22 +97,11 @@ export function BuyAbilitySection() {
                   <span className="font-medium text-foreground text-lg">PropertyHub Loans</span>
                 </div>
 
-                {/* Data Rows */}
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground font-light">Suggested target price</p>
-                    <p className="text-3xl font-bold text-foreground tracking-tight">KSh 12,500,000</p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground font-light">Monthly payment</p>
-                    <p className="text-3xl font-bold text-foreground tracking-tight">KSh 95,750</p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground font-light">Today's rate / APR</p>
-                    <p className="text-3xl font-bold text-primary tracking-tight">12.5% / 13.2%</p>
-                  </div>
+                {/* Description */}
+                <div className="space-y-2">
+                  <p className="text-lg text-foreground font-light leading-relaxed">
+                    Find out what you can afford and start your home search confidently.
+                  </p>
                 </div>
 
                 {/* CTA Button */}

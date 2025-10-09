@@ -7,6 +7,7 @@ import { BestLocationsSection } from "@/components/BestLocationsSection";
 import { BuyAbilitySection } from "@/components/BuyAbilitySection";
 import { LandServicesSection } from "@/components/LandServicesSection";
 import { NewsBlogSection } from "@/components/NewsBlogSection";
+import { Footer } from "@/components/Footer";
 import { PropertyFilters } from "@/components/PropertyFilters";
 import { PropertyCard } from "@/components/PropertyCard";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -222,6 +223,7 @@ export default function Dashboard() {
         <BuyAbilitySection />
         <LandServicesSection />
         <NewsBlogSection />
+      <Footer />
     </div>
   );
 }

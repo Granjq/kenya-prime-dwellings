@@ -110,14 +110,6 @@ export function BuyAbilitySection() {
                 >
                   Let's get started
                 </Button>
-
-                {/* Info Badge */}
-                <div className="flex items-start gap-3 p-4 bg-accent/30 rounded-xl">
-                  <TrendingUp className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-muted-foreground font-light leading-relaxed">
-                    Pre-qualify in minutes with no impact to your credit score
-                  </p>
-                </div>
               </CardContent>
             </Card>
           </div>

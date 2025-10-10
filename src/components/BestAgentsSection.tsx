@@ -86,8 +86,8 @@ export function BestAgentsSection() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="-left-12 bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-300" />
-            <CarouselNext className="-right-12 bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-300" />
+            <CarouselPrevious className="-left-12 bg-background/30 dark:bg-background/20 backdrop-blur-xl border border-border/40 shadow-2xl hover:bg-background/50 hover:border-border/60 hover:scale-110 active:scale-95 transition-all duration-300 text-foreground" />
+            <CarouselNext className="-right-12 bg-background/30 dark:bg-background/20 backdrop-blur-xl border border-border/40 shadow-2xl hover:bg-background/50 hover:border-border/60 hover:scale-110 active:scale-95 transition-all duration-300 text-foreground" />
           </Carousel>
         </div>
 

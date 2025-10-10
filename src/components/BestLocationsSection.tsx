@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, TrendingUp, DollarSign } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { AnimatedCountyText } from "./AnimatedCountyText";
 
 // Import images
@@ -158,8 +157,6 @@ const categoryLabels = {
 
 export function BestLocationsSection() {
   const [activeCategory, setActiveCategory] = useState<keyof typeof locationData>("rent");
-  const isMobile = useIsMobile();
-
   const currentLocations = locationData[activeCategory];
 
   const LocationCard = ({ location, index }: { location: Location; index: number }) => (
@@ -249,33 +246,26 @@ export function BestLocationsSection() {
           </div>
         </div>
 
-        {isMobile ? (
-          <div className="relative">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {currentLocations.map((location, index) => (
-                  <CarouselItem key={location.id} className="pl-2 md:pl-4 basis-4/5 sm:basis-3/4">
-                    <LocationCard location={location} index={index} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="left-2" />
-              <CarouselNext className="right-2" />
-            </Carousel>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {currentLocations.map((location, index) => (
-              <LocationCard key={location.id} location={location} index={index} />
-            ))}
-          </div>
-        )}
+        <div className="relative">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+              slidesToScroll: 1,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {currentLocations.map((location, index) => (
+                <CarouselItem key={location.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/4">
+                  <LocationCard location={location} index={index} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
+            <CarouselNext className="right-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
+          </Carousel>
+        </div>
       </div>
     </section>
   );

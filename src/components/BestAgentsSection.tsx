@@ -1,6 +1,5 @@
 import { AgentCard } from "./AgentCard";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 // Mock data for Kenyan real estate agents
 const topAgents = [
@@ -47,8 +46,6 @@ const topAgents = [
 ];
 
 export function BestAgentsSection() {
-  const isMobile = useIsMobile();
-
   const AgentCardWrapper = ({ agent, index }: { agent: typeof topAgents[0]; index: number }) => (
     <div 
       className="animate-scale-in w-full"
@@ -72,34 +69,27 @@ export function BestAgentsSection() {
           </p>
         </div>
 
-        {/* Agents Grid/Carousel */}
-        {isMobile ? (
-          <div className="relative">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {topAgents.map((agent, index) => (
-                  <CarouselItem key={agent.id} className="pl-2 md:pl-4 basis-4/5 sm:basis-1/2">
-                    <AgentCardWrapper agent={agent} index={index} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="left-2" />
-              <CarouselNext className="right-2" />
-            </Carousel>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {topAgents.map((agent, index) => (
-              <AgentCardWrapper key={agent.id} agent={agent} index={index} />
-            ))}
-          </div>
-        )}
+        {/* Agents Carousel */}
+        <div className="relative">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+              slidesToScroll: 1,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {topAgents.map((agent, index) => (
+                <CarouselItem key={agent.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/4">
+                  <AgentCardWrapper agent={agent} index={index} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
+            <CarouselNext className="right-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
+          </Carousel>
+        </div>
 
         {/* CTA Section */}
         <div className="mt-16 text-center">

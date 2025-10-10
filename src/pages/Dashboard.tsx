@@ -115,7 +115,6 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
   const [activeType, setActiveType] = useState("all");
-  const isMobile = useIsMobile();
 
   // Filter properties based on search term, status filter, and type filter
   const filteredProperties = useMemo(() => {
@@ -175,34 +174,27 @@ export default function Dashboard() {
             growthCount={growthCount}
           />
 
-          {/* Properties Grid/Carousel */}
-          {isMobile ? (
-            <div className="relative">
-              <Carousel
-                opts={{
-                  align: "start",
-                  loop: true,
-                }}
-                className="w-full"
-              >
-                <CarouselContent className="-ml-2 md:-ml-4">
-                  {filteredProperties.map((property, index) => (
-                    <CarouselItem key={property.id} className="pl-2 md:pl-4 basis-4/5 sm:basis-3/4">
-                      <PropertyCardWrapper property={property} index={index} />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-2" />
-                <CarouselNext className="right-2" />
-              </Carousel>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProperties.map((property, index) => (
-                <PropertyCardWrapper key={property.id} property={property} index={index} />
-              ))}
-            </div>
-          )}
+          {/* Properties Carousel */}
+          <div className="relative">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+                slidesToScroll: 1,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {filteredProperties.map((property, index) => (
+                  <CarouselItem key={property.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/4">
+                    <PropertyCardWrapper property={property} index={index} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
+              <CarouselNext className="right-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
+            </Carousel>
+          </div>
 
           {/* No Results */}
           {filteredProperties.length === 0 && (

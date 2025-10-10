@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { Home, TrendingUp } from "lucide-react";
 
 // Import property images
@@ -52,7 +51,6 @@ const buyAbilityProperties = [
 ];
 
 export function BuyAbilitySection() {
-  const isMobile = useIsMobile();
   const [api, setApi] = useState<CarouselApi>();
   const [isHovered, setIsHovered] = useState(false);
 
@@ -124,13 +122,14 @@ export function BuyAbilitySection() {
               opts={{
                 align: "start",
                 loop: true,
+                slidesToScroll: 1,
               }}
               setApi={setApi}
               className="w-full"
             >
-              <CarouselContent className="-ml-4">
+              <CarouselContent className="-ml-2 md:-ml-4">
                 {buyAbilityProperties.map((property, index) => (
-                  <CarouselItem key={property.id} className="pl-4 md:basis-1/2">
+                  <CarouselItem key={property.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/4">
                     <PropertyCardItem property={property} index={index} />
                   </CarouselItem>
                 ))}

@@ -134,8 +134,8 @@ export function BuyAbilitySection() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-            <CarouselPrevious className="-left-12 bg-background/30 dark:bg-background/20 backdrop-blur-xl border border-border/40 shadow-2xl hover:bg-background/50 hover:border-border/60 hover:scale-110 active:scale-95 transition-all duration-300 text-foreground" />
-            <CarouselNext className="-right-12 bg-background/30 dark:bg-background/20 backdrop-blur-xl border border-border/40 shadow-2xl hover:bg-background/50 hover:border-border/60 hover:scale-110 active:scale-95 transition-all duration-300 text-foreground" />
+              <CarouselPrevious className="left-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
+              <CarouselNext className="right-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
             </Carousel>
           </div>
         </div>

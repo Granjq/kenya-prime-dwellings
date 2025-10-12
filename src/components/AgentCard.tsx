@@ -36,7 +36,7 @@ export function AgentCard({ agent }: AgentCardProps) {
     <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 border border-border/50 bg-card/50 backdrop-blur-sm hover:scale-[1.02]">
       <CardContent className="p-6 relative">
         {/* Top badges */}
-        <div className="absolute top-4 right-4 flex flex-col gap-1">
+        <div className="absolute top-4 left-4 flex flex-wrap gap-1 max-w-[60%] z-10">
           {isTopRated && (
             <Badge className="bg-accent text-accent-foreground text-[10px] px-2 py-0.5 shadow-sm">
               Top Rated
@@ -55,7 +55,7 @@ export function AgentCard({ agent }: AgentCardProps) {
             <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
             <span className="font-bold text-lg text-foreground">{agent.rating}</span>
           </div>
-          <Badge variant="secondary" className="text-xs font-medium">
+          <Badge variant="secondary" className="text-xs font-medium shrink-0">
             {agent.reviews} Reviews
           </Badge>
         </div>

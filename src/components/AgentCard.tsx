@@ -50,7 +50,7 @@ export function AgentCard({ agent }: AgentCardProps) {
         </div>
 
         {/* Rating and Reviews */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4 pt-2">
           <div className="flex items-center gap-1.5">
             <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
             <span className="font-bold text-lg text-foreground">{agent.rating}</span>

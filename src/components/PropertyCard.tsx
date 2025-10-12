@@ -53,9 +53,9 @@ export function PropertyCard({ property }: PropertyCardProps) {
   };
 
   return (
-    <Card className="group relative overflow-hidden bg-card shadow-card hover:shadow-card-hover transition-all duration-300 animate-fade-in">
+    <Card className="group relative overflow-hidden bg-card shadow-lg hover:shadow-2xl transition-all duration-500 animate-fade-in hover:scale-[1.02] border-border/50">
       {/* Property Image */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-t-lg">
         <div className={`aspect-[4/3] bg-muted transition-opacity duration-300 ${imageLoaded ? 'opacity-0' : 'opacity-100'}`} />
         <img
           src={property.image}

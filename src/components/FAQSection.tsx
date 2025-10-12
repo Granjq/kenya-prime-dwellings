@@ -52,9 +52,9 @@ export function FAQSection() {
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="border border-border/50 rounded-lg px-6 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300"
+                className="border border-border/50 rounded-lg px-6 bg-card/50 backdrop-blur-sm hover:border-primary/30 hover:bg-card/70 transition-all duration-300"
               >
-                <AccordionTrigger className="text-left hover:no-underline">
+                <AccordionTrigger className="text-left hover:no-underline hover:text-primary transition-colors">
                   <span className="text-base md:text-lg font-semibold text-foreground pr-4">
                     {faq.question}
                   </span>
@@ -66,21 +66,47 @@ export function FAQSection() {
                 </AccordionContent>
               </AccordionItem>
             ))}
+            
+            {/* Support Contact Item */}
+            <AccordionItem
+              value="support"
+              className="border border-primary/30 rounded-lg px-6 bg-primary/5 backdrop-blur-sm hover:bg-primary/10 transition-all duration-300"
+            >
+              <AccordionTrigger className="text-left hover:no-underline hover:text-primary transition-colors">
+                <span className="text-base md:text-lg font-semibold text-foreground pr-4">
+                  Didn't find your answer?
+                </span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Our support team is here to help! Reach out to us and we'll get back to you within 24 hours.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <a 
+                      href="mailto:support@kenyahomes.com"
+                      className="inline-flex items-center justify-center px-5 py-2.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg hover:scale-105"
+                    >
+                      Email Support
+                    </a>
+                    <a 
+                      href="tel:+254700000000"
+                      className="inline-flex items-center justify-center px-5 py-2.5 border-2 border-primary/30 text-primary rounded-lg hover:bg-primary/10 hover:border-primary transition-all duration-300 text-sm font-medium hover:scale-105"
+                    >
+                      Call Us
+                    </a>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
           </Accordion>
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-12 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <p className="text-muted-foreground mb-4">
-            Still have questions?
+        {/* Bottom Text */}
+        <div className="text-center mt-8 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <p className="text-muted-foreground text-sm">
+            Available 24/7 to assist with all your real estate needs
           </p>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all duration-300"
-          >
-            Contact our support team
-            <span>→</span>
-          </a>
         </div>
       </div>
     </section>

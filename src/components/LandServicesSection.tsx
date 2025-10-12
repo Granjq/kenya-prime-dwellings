@@ -355,7 +355,14 @@ export function LandServicesSection() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {currentServices.map((service, index) => (
-              <ServiceCard key={service.id} service={service} index={index} />
+              <div 
+                key={service.id}
+                className={`rounded-xl p-4 ${
+                  index % 2 === 0 ? 'bg-background' : 'bg-muted/30'
+                }`}
+              >
+                <ServiceCard service={service} index={index} />
+              </div>
             ))}
           </div>
         )}

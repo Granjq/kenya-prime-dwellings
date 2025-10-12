@@ -9,8 +9,8 @@ export const Footer = () => {
         <div className="absolute bottom-10 right-10 w-96 h-96 bg-primary-glow/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-16">
           {/* Brand Section */}
           <div className="space-y-4">
             <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
@@ -86,37 +86,37 @@ export const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="border-t border-border/50 pt-10 flex flex-col md:flex-row justify-between items-center gap-8">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} PropertyHub. All rights reserved.
           </p>
 
-          {/* Social Icons */}
+          {/* Social Icons with Glassmorphism */}
           <div className="flex items-center gap-4">
             <a 
               href="#" 
-              className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all duration-300 hover:scale-110"
+              className="w-11 h-11 rounded-full bg-background/30 backdrop-blur-md border border-border/40 hover:bg-primary/20 hover:border-primary/50 flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl"
               aria-label="Facebook"
             >
               <Facebook className="w-5 h-5 text-primary" />
             </a>
             <a 
               href="#" 
-              className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all duration-300 hover:scale-110"
+              className="w-11 h-11 rounded-full bg-background/30 backdrop-blur-md border border-border/40 hover:bg-primary/20 hover:border-primary/50 flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl"
               aria-label="Twitter"
             >
               <Twitter className="w-5 h-5 text-primary" />
             </a>
             <a 
               href="#" 
-              className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all duration-300 hover:scale-110"
+              className="w-11 h-11 rounded-full bg-background/30 backdrop-blur-md border border-border/40 hover:bg-primary/20 hover:border-primary/50 flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl"
               aria-label="Instagram"
             >
               <Instagram className="w-5 h-5 text-primary" />
             </a>
             <a 
               href="#" 
-              className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all duration-300 hover:scale-110"
+              className="w-11 h-11 rounded-full bg-background/30 backdrop-blur-md border border-border/40 hover:bg-primary/20 hover:border-primary/50 flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-5 h-5 text-primary" />

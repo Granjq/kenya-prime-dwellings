@@ -91,21 +91,25 @@ export function BestAgentsSection() {
           </Carousel>
         </div>
 
-        {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-primary to-primary/80 rounded-2xl p-8 md:p-12 text-white">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">
+        {/* Enhanced CTA Section */}
+        <div className="mt-16 text-center relative overflow-hidden rounded-3xl">
+          {/* Background with gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20"></div>
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,_rgba(34,197,94,0.3),transparent_50%)]"></div>
+          
+          <div className="relative backdrop-blur-sm bg-card/30 p-10 md:p-16 border border-border/30 animate-fade-in">
+            <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Ready to Find Your Dream Home?
             </h3>
-            <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
               Join thousands of happy homeowners who found their perfect property 
-              through KenyaHomes trusted agents.
+              through KenyaHomes trusted agents. Start your journey today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-white/90 transition-colors">
+              <button className="px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
                 Join as Agent
               </button>
-              <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors">
+              <button className="px-8 py-3 border-2 border-primary/30 hover:border-primary text-foreground hover:bg-primary/10 rounded-lg font-semibold backdrop-blur-sm hover:scale-105 transition-all duration-300">
                 Learn More
               </button>
             </div>

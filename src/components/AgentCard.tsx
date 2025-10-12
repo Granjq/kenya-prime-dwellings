@@ -28,16 +28,34 @@ export function AgentCard({ agent }: AgentCardProps) {
       .toUpperCase();
   };
 
+  // Determine badges based on rating and reviews
+  const isTopRated = agent.rating >= 4.8;
+  const isVerified = agent.reviews >= 50;
+
   return (
-    <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 border-0 bg-card/50 backdrop-blur-sm hover:scale-[1.02]">
-      <CardContent className="p-6">
+    <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 border border-border/50 bg-card/50 backdrop-blur-sm hover:scale-[1.02]">
+      <CardContent className="p-6 relative">
+        {/* Top badges */}
+        <div className="absolute top-4 right-4 flex flex-col gap-1">
+          {isTopRated && (
+            <Badge className="bg-accent text-accent-foreground text-[10px] px-2 py-0.5 shadow-sm">
+              Top Rated
+            </Badge>
+          )}
+          {isVerified && (
+            <Badge className="bg-success text-success-foreground text-[10px] px-2 py-0.5 shadow-sm">
+              Verified
+            </Badge>
+          )}
+        </div>
+
         {/* Rating and Reviews */}
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-1">
-            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-            <span className="font-semibold text-foreground">{agent.rating}</span>
+          <div className="flex items-center gap-1.5">
+            <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+            <span className="font-bold text-lg text-foreground">{agent.rating}</span>
           </div>
-          <Badge variant="secondary" className="text-xs">
+          <Badge variant="secondary" className="text-xs font-medium">
             {agent.reviews} Reviews
           </Badge>
         </div>
@@ -52,16 +70,16 @@ export function AgentCard({ agent }: AgentCardProps) {
           </Avatar>
         </div>
 
-        {/* Agent Info */}
-        <div className="text-center space-y-2 mb-4">
-          <h3 className="font-semibold text-lg text-foreground">{agent.name}</h3>
-          <div className="flex items-center justify-center gap-1 text-muted-foreground">
-            <MapPin className="w-3 h-3" />
-            <span className="text-sm">{agent.location}</span>
-          </div>
-          <Badge variant="outline" className="text-xs">
+        {/* Agent Info with improved hierarchy */}
+        <div className="text-center space-y-2.5 mb-4">
+          <h3 className="font-bold text-xl text-foreground group-hover:text-primary transition-colors">{agent.name}</h3>
+          <Badge variant="outline" className="text-xs font-medium px-3 py-1">
             {agent.specialization}
           </Badge>
+          <div className="flex items-center justify-center gap-1.5 text-muted-foreground">
+            <MapPin className="w-4 h-4" />
+            <span className="text-sm font-medium">{agent.location}</span>
+          </div>
         </div>
 
         {/* Stats */}

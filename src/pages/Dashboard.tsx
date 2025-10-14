@@ -15,6 +15,8 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Home } from "lucide-react";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
 
 // Import property images
 import houseNairobi1 from "@/assets/house-nairobi-1.jpg";
@@ -156,10 +158,13 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="min-h-screen bg-background animate-fade-in">
-      <TopHeaderBar />
-      <DashboardHeader />
-      <StatsSection />
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-background animate-fade-in">
+        <AppSidebar />
+        <SidebarInset className="flex-1">
+          <TopHeaderBar />
+          <DashboardHeader />
+          <StatsSection />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-8">
@@ -212,14 +217,16 @@ export default function Dashboard() {
         </div>
       </main>
       
-        <BestAgentsSection />
-        <BestLocationsSection />
-        <BuyAbilitySection />
-        <LandServicesSection />
-        <FAQSection />
-        <NewsBlogSection />
-      <Footer />
-      <ScrollToTop />
-    </div>
+          <BestAgentsSection />
+          <BestLocationsSection />
+          <BuyAbilitySection />
+          <LandServicesSection />
+          <FAQSection />
+          <NewsBlogSection />
+          <Footer />
+          <ScrollToTop />
+        </SidebarInset>
+      </div>
+    </SidebarProvider>
   );
 }

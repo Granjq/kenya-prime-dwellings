@@ -30,36 +30,26 @@ const menuItems = [
 
 export function AppSidebar() {
   const [profileDrawerOpen, setProfileDrawerOpen] = useState(false);
-  const { state, toggleSidebar } = useSidebar();
+  const { state, open } = useSidebar();
   const isCollapsed = state === "collapsed";
 
   return (
     <>
       <Sidebar
         collapsible="icon"
-        className="border-r border-primary/20 backdrop-blur-xl bg-sidebar/95 shadow-xl shadow-primary/5"
+        className="border-r border-primary/20 backdrop-blur-xl bg-sidebar/95 shadow-xl shadow-primary/5 data-[state=collapsed]:w-16 data-[state=expanded]:w-64 transition-all duration-300"
       >
         <SidebarHeader className="border-b border-primary/20 p-4 bg-gradient-to-b from-primary/5 to-transparent">
-          <div className="flex items-center gap-2">
-            {!isCollapsed && (
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-primary via-primary-glow to-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/30">
-                  <Home className="h-4 w-4 text-primary-foreground" />
-                </div>
-                <h2 className="text-lg font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
-                  PropertyHub
-                </h2>
+          {!isCollapsed && (
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary via-primary-glow to-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/30">
+                <Home className="h-4 w-4 text-primary-foreground" />
               </div>
-            )}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleSidebar}
-              className="ml-auto h-8 w-8 hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20"
-            >
-              <Menu className="h-4 w-4" />
-            </Button>
-          </div>
+              <h2 className="text-lg font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
+                PropertyHub
+              </h2>
+            </div>
+          )}
         </SidebarHeader>
 
         <SidebarContent className="px-2">

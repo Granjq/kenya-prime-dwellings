@@ -1,133 +1,95 @@
-import { Home, Building2, MapPin, Users, TrendingUp, Settings, FileText } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Home, Search, Heart, PlusCircle, Settings, Menu } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarHeader,
+  SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { UserProfileCard } from "./UserProfileCard";
+import { ProfileCard } from "./ProfileCard";
+import { ProfileDrawer } from "./ProfileDrawer";
+import { Button } from "@/components/ui/button";
 
 const menuItems = [
-  { title: "Dashboard", url: "/dashboard", icon: Home },
-  { title: "Properties", url: "/properties", icon: Building2 },
-  { title: "Locations", url: "/locations", icon: MapPin },
-  { title: "Agents", url: "/agents", icon: Users },
-  { title: "Growing Market", url: "/market", icon: TrendingUp },
-];
-
-const secondaryItems = [
-  { title: "Settings", url: "/settings", icon: Settings },
-  { title: "Reports", url: "/reports", icon: FileText },
+  { title: "Dashboard", icon: Home, url: "/" },
+  { title: "Search", icon: Search, url: "/search" },
+  { title: "Saved", icon: Heart, url: "/saved" },
+  { title: "Add Listing", icon: PlusCircle, url: "/add-listing" },
+  { title: "Settings", icon: Settings, url: "/settings" },
 ];
 
 export function AppSidebar() {
-  const { state } = useSidebar();
-  const location = useLocation();
+  const [profileDrawerOpen, setProfileDrawerOpen] = useState(false);
+  const { state, toggleSidebar } = useSidebar();
   const isCollapsed = state === "collapsed";
 
-  const isActive = (path: string) => location.pathname === path;
-
   return (
-    <Sidebar
-      collapsible="icon"
-      className="border-r border-sidebar-border bg-sidebar/95 backdrop-blur-xl"
-    >
-      <SidebarContent>
-        {/* Logo Section */}
-        <div className={`px-4 py-6 border-b border-sidebar-border/50 ${isCollapsed ? "px-2" : ""}`}>
-          {!isCollapsed ? (
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-[0_0_20px_rgba(var(--primary-glow)/0.4)]">
-                <Building2 className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-sidebar-foreground">PropertyHub</h2>
-                <p className="text-xs text-primary/70 font-medium">Premium Listings</p>
-              </div>
-            </div>
-          ) : (
-            <div className="w-10 h-10 mx-auto rounded-lg bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-[0_0_20px_rgba(var(--primary-glow)/0.4)]">
-              <Building2 className="w-6 h-6 text-primary-foreground" />
-            </div>
-          )}
-        </div>
+    <>
+      <Sidebar
+        collapsible="icon"
+        className="border-r border-primary/10 backdrop-blur-xl bg-sidebar/95"
+      >
+        <SidebarHeader className="border-b border-primary/10 p-4">
+          <div className="flex items-center gap-2">
+            {!isCollapsed && (
+              <h2 className="text-lg font-bold text-primary">PropertyHub</h2>
+            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleSidebar}
+              className="ml-auto h-8 w-8 hover:bg-primary/10 hover:text-primary"
+            >
+              <Menu className="h-4 w-4" />
+            </Button>
+          </div>
+        </SidebarHeader>
 
-        {/* Main Navigation */}
-        <SidebarGroup>
-          <SidebarGroupLabel className={isCollapsed ? "sr-only" : ""}>
-            Main Menu
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={isActive(item.url)}
-                    className={`
-                      transition-all duration-300
-                      ${isActive(item.url)
-                        ? "bg-primary/10 text-primary border-l-2 border-primary shadow-[0_0_10px_rgba(var(--primary-glow)/0.2)]"
-                        : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:border-l-2 hover:border-primary/30"
-                      }
-                    `}
-                    tooltip={isCollapsed ? item.title : undefined}
-                  >
-                    <NavLink to={item.url} className="flex items-center gap-3 w-full">
-                      <item.icon className={`w-5 h-5 ${isActive(item.url) ? "text-primary" : ""}`} />
-                      {!isCollapsed && <span className="font-medium">{item.title}</span>}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel className={isCollapsed ? "sr-only" : ""}>
+              Navigation
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {menuItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      tooltip={isCollapsed ? item.title : undefined}
+                      className="hover:bg-primary/10 hover:text-primary data-[active=true]:bg-primary/20 data-[active=true]:text-primary transition-all duration-300"
+                    >
+                      <a href={item.url}>
+                        <item.icon className="h-4 w-4" />
+                        {!isCollapsed && <span>{item.title}</span>}
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
 
-        {/* Secondary Navigation */}
-        <SidebarGroup>
-          <SidebarGroupLabel className={isCollapsed ? "sr-only" : ""}>
-            Settings
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {secondaryItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={isActive(item.url)}
-                    className={`
-                      transition-all duration-300
-                      ${isActive(item.url)
-                        ? "bg-primary/10 text-primary border-l-2 border-primary"
-                        : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:border-l-2 hover:border-primary/30"
-                      }
-                    `}
-                    tooltip={isCollapsed ? item.title : undefined}
-                  >
-                    <NavLink to={item.url} className="flex items-center gap-3 w-full">
-                      <item.icon className={`w-5 h-5 ${isActive(item.url) ? "text-primary" : ""}`} />
-                      {!isCollapsed && <span className="font-medium">{item.title}</span>}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
+        <SidebarFooter className="mt-auto">
+          <ProfileCard
+            onViewProfile={() => setProfileDrawerOpen(true)}
+            collapsed={isCollapsed}
+          />
+        </SidebarFooter>
+      </Sidebar>
 
-      {/* User Profile Card at Bottom */}
-      <SidebarFooter className="border-t border-sidebar-border/50 p-4">
-        <UserProfileCard />
-      </SidebarFooter>
-    </Sidebar>
+      <ProfileDrawer
+        open={profileDrawerOpen}
+        onOpenChange={setProfileDrawerOpen}
+      />
+    </>
   );
 }

@@ -15,7 +15,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Home } from "lucide-react";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 
 // Import property images
@@ -158,10 +158,10 @@ export default function Dashboard() {
   );
 
   return (
-    <SidebarProvider defaultOpen={true}>
-      <div className="flex min-h-screen w-full bg-background animate-fade-in">
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-background animate-fade-in">
         <AppSidebar />
-        <div className="flex-1 flex flex-col w-full overflow-x-hidden">
+        <SidebarInset className="flex-1">
           <TopHeaderBar />
           <DashboardHeader />
           <StatsSection />
@@ -217,15 +217,15 @@ export default function Dashboard() {
         </div>
       </main>
       
-        <BestAgentsSection />
-        <BestLocationsSection />
-        <BuyAbilitySection />
-        <LandServicesSection />
-        <FAQSection />
-        <NewsBlogSection />
+          <BestAgentsSection />
+          <BestLocationsSection />
+          <BuyAbilitySection />
+          <LandServicesSection />
+          <FAQSection />
+          <NewsBlogSection />
           <Footer />
           <ScrollToTop />
-        </div>
+        </SidebarInset>
       </div>
     </SidebarProvider>
   );

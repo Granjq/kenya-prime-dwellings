@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Home, Loader2, CheckCircle2 } from "lucide-react";
+import { Home, Loader2, CheckCircle2, Mail } from "lucide-react";
 import { toast } from "sonner";
-import { useAuth } from "@/hooks/useAuth";
 
 export default function Auth() {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
@@ -16,15 +15,6 @@ export default function Auth() {
     email: "",
     password: "",
   });
-  const { login, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-
-  // Redirect if already authenticated
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,11 +25,10 @@ export default function Auth() {
       setIsLoading(false);
       setShowSuccess(true);
       
-      // Call login which handles navigation
       setTimeout(() => {
-        login();
+        setShowSuccess(false);
         toast.success("Successfully logged in!");
-      }, 1500);
+      }, 2000);
     }, 1500);
   };
 
@@ -48,7 +37,7 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0a1628] via-[#0f1e33] to-[#1a2942] dark animate-fade-in">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0a1628] via-[#0f1e33] to-[#1a2942] dark">
       {/* Blurred background silhouette */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/50 to-transparent" />
@@ -150,7 +139,7 @@ export default function Auth() {
                 {activeTab === "login" && (
                   <div className="flex justify-end">
                     <Link
-                      to="/auth/reset"
+                      to="/reset-password"
                       className="text-sm text-primary hover:text-primary-glow transition-colors"
                     >
                       Forgot password?

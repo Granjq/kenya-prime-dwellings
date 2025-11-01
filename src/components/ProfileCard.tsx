@@ -1,130 +1,126 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { MoreVertical } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { useSidebar } from "@/components/ui/sidebar";
 
 interface ProfileCardProps {
-  onOpenProfile: () => void;
+  onViewProfile: () => void;
+  collapsed?: boolean;
 }
 
-export function ProfileCard({ onOpenProfile }: ProfileCardProps) {
-  const { user, isAuthenticated } = useAuth();
-  const { state } = useSidebar();
-  const isCollapsed = state === "collapsed";
+export function ProfileCard({ onViewProfile, collapsed = false }: ProfileCardProps) {
+  const { isAuthenticated, user, logout } = useAuth();
 
   if (!isAuthenticated) {
     return (
-      <Link to="/auth">
-        <div className="group relative rounded-lg bg-background/40 backdrop-blur-xl border border-border/50 p-3 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-0.5 transition-all duration-300">
-          <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/5 to-primary-glow/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="relative flex items-center justify-center gap-3">
-            {isCollapsed ? (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="w-10 h-10 rounded-full bg-gradient-hero flex items-center justify-center ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300">
-                      <span className="text-xs font-semibold text-primary-foreground">SI</span>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent side="right">
-                    <p className="text-sm font-medium">Sign in to continue</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            ) : (
-              <>
-                <div className="w-10 h-10 rounded-full bg-gradient-hero flex items-center justify-center ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300">
-                  <span className="text-xs font-semibold text-primary-foreground">SI</span>
-                </div>
-                <div className="flex-1 text-left">
-                  <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
-                    Sign in to continue
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    Access your saved listings
-                  </p>
-                </div>
-              </>
-            )}
-          </div>
+      <div className="p-3 mx-2 mb-2 rounded-lg backdrop-blur-xl bg-card/40 border border-primary/20 hover:border-primary/40 transition-all duration-300 shadow-lg hover:shadow-primary/20">
+        <div className="flex flex-col items-center gap-2">
+          {!collapsed && (
+            <p className="text-xs text-muted-foreground text-center">Sign in to continue</p>
+          )}
+          <Button 
+            asChild 
+            size={collapsed ? "icon" : "sm"}
+            className="w-full bg-primary/20 hover:bg-primary/30 text-primary border border-primary/40 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/30"
+          >
+            <Link to="/auth">
+              {collapsed ? "→" : "Sign In"}
+            </Link>
+          </Button>
         </div>
-      </Link>
+      </div>
     );
   }
 
-  const userInitials = user?.name
+  const initials = user?.name
     ?.split(" ")
     .map((n) => n[0])
     .join("")
-    .toUpperCase() || "JD";
+    .toUpperCase() || "U";
 
-  const userRole = "Buyer"; // This would come from user data in a real app
-
-  if (isCollapsed) {
+  if (collapsed) {
     return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              onClick={onOpenProfile}
-              className="group relative rounded-lg bg-background/40 backdrop-blur-xl border border-border/50 p-2 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-0.5 transition-all duration-300 w-full"
-            >
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/5 to-primary-glow/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative flex items-center justify-center">
-                <Avatar className="h-10 w-10 ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300 group-hover:scale-105">
-                  <AvatarImage src="" alt={user?.name || "User"} />
-                  <AvatarFallback className="bg-gradient-hero text-primary-foreground font-semibold">
-                    {userInitials}
-                  </AvatarFallback>
-                </Avatar>
-              </div>
-            </button>
-          </TooltipTrigger>
-          <TooltipContent side="right" className="flex flex-col gap-1">
-            <p className="font-semibold">{user?.name || "John Doe"}</p>
-            <p className="text-xs text-primary">{userRole}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <div className="p-2 mx-2 mb-2 rounded-lg backdrop-blur-xl bg-card/40 border border-primary/20 hover:border-primary/40 transition-all duration-300 shadow-lg hover:shadow-primary/20 group">
+        <button
+          onClick={onViewProfile}
+          className="w-full flex items-center justify-center"
+        >
+          <Avatar className="h-10 w-10 ring-2 ring-primary/30 group-hover:ring-primary/60 transition-all duration-300 group-hover:animate-pulse-glow">
+            <AvatarImage src="" alt={user?.name} />
+            <AvatarFallback className="bg-primary/20 text-primary font-semibold">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+        </button>
+      </div>
     );
   }
 
   return (
-    <div className="group relative rounded-lg bg-background/40 backdrop-blur-xl border border-border/50 p-3 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-0.5 transition-all duration-300">
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/5 to-primary-glow/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      <div className="relative flex items-center gap-3">
-        <Avatar className="h-11 w-11 ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300 group-hover:scale-105">
-          <AvatarImage src="" alt={user?.name || "User"} />
-          <AvatarFallback className="bg-gradient-hero text-primary-foreground font-semibold">
-            {userInitials}
-          </AvatarFallback>
-        </Avatar>
-        
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-foreground truncate">
-            {user?.name || "John Doe"}
-          </p>
-          <p className="text-xs text-primary/80 truncate">
-            {userRole}
-          </p>
-        </div>
-        
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onOpenProfile}
-          className="h-8 w-8 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+    <div className="p-3 mx-2 mb-2 rounded-lg backdrop-blur-xl bg-card/40 border border-primary/20 hover:border-primary/40 transition-all duration-300 shadow-lg hover:shadow-primary/20 hover:-translate-y-0.5 group">
+      <div className="flex items-center gap-3">
+        <button onClick={onViewProfile} className="flex-shrink-0">
+          <Avatar className="h-12 w-12 ring-2 ring-primary/30 group-hover:ring-primary/60 transition-all duration-300 group-hover:animate-pulse-glow">
+            <AvatarImage src="" alt={user?.name} />
+            <AvatarFallback className="bg-primary/20 text-primary font-semibold">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+        </button>
+
+        <button 
+          onClick={onViewProfile}
+          className="flex-1 min-w-0 text-left"
         >
-          <MoreVertical className="h-4 w-4" />
-        </Button>
+          <p className="text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors">
+            {user?.name || "User"}
+          </p>
+          <p className="text-xs text-primary/70 truncate">
+            {user?.email || "user@example.com"}
+          </p>
+        </button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 flex-shrink-0 hover:bg-primary/10 hover:text-primary transition-colors"
+            >
+              <MoreVertical className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent 
+            align="end" 
+            className="w-48 backdrop-blur-xl bg-card/95 border-primary/20"
+          >
+            <DropdownMenuItem 
+              onClick={onViewProfile}
+              className="cursor-pointer hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary"
+            >
+              View Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={onViewProfile}
+              className="cursor-pointer hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary"
+            >
+              Edit Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={logout}
+              className="cursor-pointer text-destructive hover:bg-destructive/10 hover:text-destructive focus:bg-destructive/10 focus:text-destructive"
+            >
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );

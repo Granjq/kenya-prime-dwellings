@@ -1,70 +1,73 @@
-🏡 Kenya Prime Dwellings
+# Welcome to your Lovable project
 
-Kenya Prime Dwellings is a real estate web platform built to simplify property discovery and increase transparency in Kenya’s housing market.
-The project is currently in its prototype stage, serving both as a showcase build for feedback and an early MVP for live testing.
+## Project info
 
-🔗 Live Prototype: https://kenya-prime-dwellings.vercel.app
+**URL**: https://lovable.dev/projects/688af1db-e3ec-4e7d-9011-6f5afe5098b0
 
-🌍 Overview
+## How can I edit this code?
 
-Kenya Prime Dwellings bridges the gap between digital property search and real-world real estate data. The platform is designed for users to browse, explore, and evaluate properties with a modern, responsive interface.
+There are several ways of editing your application.
 
-The system structure supports easy scaling into a production-ready MVP — with room for data integration, user authentication, and verified listings.
+**Use Lovable**
 
-🧩 Current Features
+Simply visit the [Lovable Project](https://lovable.dev/projects/688af1db-e3ec-4e7d-9011-6f5afe5098b0) and start prompting.
 
-Responsive, user-friendly design across desktop, tablet, and mobile
+Changes made via Lovable will be committed automatically to this repo.
 
-Intuitive layout showcasing property listings
+**Use your preferred IDE**
 
-Static header and dynamic side menu interactions
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-Ready structure for integrating live property data
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-Built with scalability and performance in mind
+Follow these steps:
 
-🚀 Prototype Purpose
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
 
-This prototype serves two key functions:
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
 
-Showcase Prototype:
+# Step 3: Install the necessary dependencies.
+npm i
 
-Demonstrates the app’s layout, design logic, and visual identity
+# Step 4: Start the development server with auto-reloading and an instant preview.
+npm run dev
+```
 
-Used for collaboration discussions and stakeholder feedback
+**Edit a file directly in GitHub**
 
-Functional MVP Base:
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-Early backend-ready framework for connecting live data
+**Use GitHub Codespaces**
 
-Can evolve into a full listing and analytics system
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-🧠 Tech Stack (Current & Planned)
+## What technologies are used for this project?
 
-Frontend: Next.js (React), Tailwind CSS
-Hosting: Vercel
-Planned Add-ons:
+This project is built with:
 
-Firebase / Supabase for backend integration
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
 
-Google Maps API for property mapping
+## How can I deploy this project?
 
-Admin dashboard for property verification
+Simply open [Lovable](https://lovable.dev/projects/688af1db-e3ec-4e7d-9011-6f5afe5098b0) and click on Share -> Publish.
 
-🤝 Collaboration
+## Can I connect a custom domain to my Lovable project?
 
-This project is a joint effort between technical and field expertise:
+Yes, you can!
 
-Tech Lead: Axiom — system architecture, UI/UX, platform optimization
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
-Field Partner: [Name] — property data collection, market validation, and on-ground insight
-
-If you’re exploring collaboration or have feedback on the build, kindly reach out for further discussions or inquiries.
-
-📅 Status
-
-Version: v0.1.0 (Prototype)
-
-Stage: Early live testing / feedback
-
-Updates: Regular refinements based on user and partner input
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)

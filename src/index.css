@@ -70,19 +70,12 @@ All colors MUST be HSL.
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -161,6 +154,20 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 
+  /* Glow animation for profile avatar */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 5px hsl(var(--primary) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.6), 0 0 30px hsl(var(--primary) / 0.3);
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
   /* Page transition animations */
   .page-transition-enter {
     opacity: 0;
@@ -180,30 +187,5 @@ All colors MUST be HSL.
   .page-transition-exit-active {
     opacity: 0;
     transition: opacity 200ms ease-in;
-  }
-
-  /* Glassmorphic utilities */
-  .glass-card {
-    background: hsl(var(--background) / 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 
-      0 4px 6px -1px hsl(0 0% 0% / 0.1),
-      0 2px 4px -2px hsl(0 0% 0% / 0.1),
-      inset 0 0 20px hsl(var(--primary) / 0.05);
-  }
-
-  .glass-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .glass-hover:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-      0 10px 15px -3px hsl(0 0% 0% / 0.1),
-      0 4px 6px -4px hsl(0 0% 0% / 0.1),
-      inset 0 0 30px hsl(var(--primary) / 0.1),
-      0 0 20px hsl(var(--primary) / 0.2);
-    border-color: hsl(var(--primary) / 0.4);
   }
 }

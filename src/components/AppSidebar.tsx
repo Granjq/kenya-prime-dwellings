@@ -1,138 +1,94 @@
 import { useState } from "react";
-import {
-  Home,
-  MapPin,
-  Users,
-  TrendingUp,
-  Settings,
-  FileText,
-} from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Home, Search, Heart, PlusCircle, Settings, Menu, MapPin, Users, TrendingUp } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarHeader,
+  SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { UserProfileCard } from "@/components/UserProfileCard";
-import { ProfileDrawer } from "@/components/ProfileDrawer";
+import { ProfileCard } from "./ProfileCard";
+import { ProfileDrawer } from "./ProfileDrawer";
+import { Button } from "@/components/ui/button";
 
 const menuItems = [
-  {
-    title: "Properties",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "Locations",
-    url: "/locations",
-    icon: MapPin,
-  },
-  {
-    title: "Agents",
-    url: "/agents",
-    icon: Users,
-  },
-  {
-    title: "Market Trends",
-    url: "/market",
-    icon: TrendingUp,
-  },
-  {
-    title: "Reports",
-    url: "/reports",
-    icon: FileText,
-  },
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: Settings,
-  },
+  { title: "Dashboard", icon: Home, url: "/" },
+  { title: "Properties", icon: Search, url: "/properties" },
+  { title: "Locations", icon: MapPin, url: "/locations" },
+  { title: "Agents", icon: Users, url: "/agents" },
+  { title: "Growing Market", icon: TrendingUp, url: "/market" },
+  { title: "Saved", icon: Heart, url: "/saved" },
+  { title: "Add Listing", icon: PlusCircle, url: "/add-listing" },
+  { title: "Settings", icon: Settings, url: "/settings" },
 ];
 
 export function AppSidebar() {
-  const location = useLocation();
-  const { state } = useSidebar();
+  const [profileDrawerOpen, setProfileDrawerOpen] = useState(false);
+  const { state, open } = useSidebar();
   const isCollapsed = state === "collapsed";
-  const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
 
   return (
     <>
-      <Sidebar collapsible="icon" className="border-r border-primary/10">
-        <SidebarContent className="bg-background/95 backdrop-blur-xl">
-          {/* Logo Section */}
-          <SidebarGroup>
-            <div className="px-4 py-6">
-              <Link to="/" className="flex items-center gap-3 group">
-                <div className="w-10 h-10 bg-gradient-hero rounded-lg flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all duration-300">
-                  <Home className="w-6 h-6 text-white" />
-                </div>
-                {!isCollapsed && (
-                  <div>
-                    <h1 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                      PropertyHub
-                    </h1>
-                    <p className="text-xs text-muted-foreground">
-                      Find Your Dream Property
-                    </p>
-                  </div>
-                )}
-              </Link>
+      <Sidebar
+        collapsible="icon"
+        className="border-r border-primary/20 backdrop-blur-xl bg-sidebar/95 shadow-xl shadow-primary/5 data-[state=collapsed]:w-16 data-[state=expanded]:w-64 transition-all duration-300"
+      >
+        <SidebarHeader className="border-b border-primary/20 p-4 bg-gradient-to-b from-primary/5 to-transparent">
+          {!isCollapsed && (
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary via-primary-glow to-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/30">
+                <Home className="h-4 w-4 text-primary-foreground" />
+              </div>
+              <h2 className="text-lg font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
+                PropertyHub
+              </h2>
             </div>
-          </SidebarGroup>
+          )}
+        </SidebarHeader>
 
-          {/* Navigation Menu */}
+        <SidebarContent className="px-2">
           <SidebarGroup>
-            <SidebarGroupLabel className={isCollapsed ? "sr-only" : ""}>
+            <SidebarGroupLabel className={isCollapsed ? "sr-only" : "text-primary/70 font-semibold px-2"}>
               Navigation
             </SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu>
-                {menuItems.map((item) => {
-                  const isActive = location.pathname === item.url;
-                  return (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={isActive}
-                        className={`
-                          transition-all duration-200
-                          ${isActive 
-                            ? 'bg-primary/10 text-primary hover:bg-primary/15 font-semibold border-l-2 border-primary' 
-                            : 'hover:bg-primary/5 hover:text-primary'
-                          }
-                        `}
-                        tooltip={isCollapsed ? item.title : undefined}
-                      >
-                        <Link to={item.url} className="flex items-center gap-3">
-                          <item.icon className={`w-5 h-5 ${isActive ? 'text-primary' : ''}`} />
-                          {!isCollapsed && <span>{item.title}</span>}
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  );
-                })}
+              <SidebarMenu className="space-y-1">
+                {menuItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      tooltip={isCollapsed ? item.title : undefined}
+                      className="group relative hover:bg-primary/10 hover:text-primary data-[active=true]:bg-primary/20 data-[active=true]:text-primary data-[active=true]:shadow-lg data-[active=true]:shadow-primary/20 transition-all duration-300 rounded-lg border border-transparent hover:border-primary/30 data-[active=true]:border-primary/40"
+                    >
+                      <a href={item.url} className="flex items-center gap-3 w-full">
+                        <item.icon className="h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
+                        {!isCollapsed && <span className="font-medium">{item.title}</span>}
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
 
-        {/* User Profile Card at Bottom */}
-        <SidebarFooter className="mt-auto border-t border-primary/10 bg-background/95 backdrop-blur-xl">
-          <UserProfileCard onOpenProfile={() => setIsProfileDrawerOpen(true)} />
+        <SidebarFooter className="mt-auto border-t border-primary/20 bg-gradient-to-t from-primary/5 to-transparent">
+          <ProfileCard
+            onViewProfile={() => setProfileDrawerOpen(true)}
+            collapsed={isCollapsed}
+          />
         </SidebarFooter>
       </Sidebar>
 
-      {/* Profile Drawer */}
-      <ProfileDrawer 
-        open={isProfileDrawerOpen} 
-        onOpenChange={setIsProfileDrawerOpen} 
+      <ProfileDrawer
+        open={profileDrawerOpen}
+        onOpenChange={setProfileDrawerOpen}
       />
     </>
   );

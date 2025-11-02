@@ -159,10 +159,10 @@ export default function Dashboard() {
 
   return (
     <SidebarProvider defaultOpen={true}>
-      <div className="min-h-screen flex w-full bg-background">
+      <div className="min-h-screen flex w-full bg-background overflow-x-hidden">
         <AppSidebar />
         <SidebarInset className="flex-1">
-          <div className="min-h-screen bg-background animate-fade-in">
+          <div className="min-h-screen bg-background animate-fade-in pt-10">
             <TopHeaderBar />
             <DashboardHeader />
             <StatsSection />

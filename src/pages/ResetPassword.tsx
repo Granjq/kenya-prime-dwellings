@@ -24,7 +24,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0a1628] via-[#0f1e33] to-[#1a2942] dark animate-fade-in">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0a1628] via-[#0f1e33] to-[#1a2942] dark">
       {/* Background elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/50 to-transparent" />

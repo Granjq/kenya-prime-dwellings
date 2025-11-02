@@ -23,12 +23,17 @@ export function TopHeaderBar() {
       if (typeof window !== 'undefined') {
         const currentScrollY = window.scrollY;
         
-        // Hide on scroll down, show on scroll up (all devices)
-        if (currentScrollY > lastScrollY && currentScrollY > 50) {
-          // Scrolling down
-          setIsVisible(false);
+        // Only hide/show on mobile and tablet (not desktop)
+        if (window.innerWidth < 1024) {
+          if (currentScrollY > lastScrollY && currentScrollY > 50) {
+            // Scrolling down
+            setIsVisible(false);
+          } else {
+            // Scrolling up
+            setIsVisible(true);
+          }
         } else {
-          // Scrolling up
+          // Always visible on desktop
           setIsVisible(true);
         }
         
@@ -47,7 +52,8 @@ export function TopHeaderBar() {
   return (
     <div
       className={cn(
-        "w-full bg-muted/50 backdrop-blur-sm border-b border-border/50 transition-all duration-300 ease-in-out fixed top-0 z-50",
+        "w-full bg-muted/50 backdrop-blur-sm border-b border-border/50 transition-all duration-300 ease-in-out z-50",
+        isMobile ? "fixed top-0" : "sticky top-0",
         isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
       )}
     >

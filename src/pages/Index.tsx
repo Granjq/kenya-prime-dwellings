@@ -14,23 +14,21 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 
 const Index = () => {
   return (
-    <SidebarProvider defaultOpen={false}>
-      <div className="min-h-screen flex w-full bg-background animate-fade-in overflow-x-hidden">
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-background animate-fade-in">
         <AppSidebar />
-        <SidebarInset className="flex-1 w-full">
+        <SidebarInset className="flex-1">
           <TopHeaderBar />
-          <div className="pt-10">
-            <DashboardHeader />
+          <DashboardHeader />
           <StatsSection />
           <BestAgentsSection />
           <BestLocationsSection />
           <BuyAbilitySection />
           <LandServicesSection />
-            <FAQSection />
-            <NewsBlogSection />
-            <Footer />
-            <ScrollToTop />
-          </div>
+          <FAQSection />
+          <NewsBlogSection />
+          <Footer />
+          <ScrollToTop />
         </SidebarInset>
       </div>
     </SidebarProvider>

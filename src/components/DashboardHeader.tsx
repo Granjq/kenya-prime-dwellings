@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { SidebarTrigger } from "@/components/ui/sidebar";
 import { 
   Home, 
   Bell,
@@ -44,22 +43,19 @@ export function DashboardHeader() {
   };
 
   return (
-    <header className="bg-background/95 backdrop-blur-xl border-b border-primary/10 sticky top-10 z-40 shadow-lg">
+    <header className="bg-background/20 backdrop-blur-xl border-b border-primary/10 sticky top-0 z-40 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Hamburger + Logo */}
-          <div className="flex items-center gap-3">
-            <SidebarTrigger className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-all duration-300" />
-            <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 bg-gradient-to-br from-primary via-primary-glow to-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/30">
               <Home className="w-6 h-6 text-primary-foreground" />
             </div>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">PropertyHub</h1>
-                <p className="text-xs text-muted-foreground">Find Your Dream Property</p>
-              </div>
-            </Link>
-          </div>
+            <div>
+              <h1 className="text-xl font-bold text-foreground">PropertyHub</h1>
+              <p className="text-xs text-muted-foreground">Find Your Dream Property</p>
+            </div>
+          </Link>
 
           {/* User Actions */}
           <div className="flex items-center gap-3">

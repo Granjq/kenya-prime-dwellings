@@ -53,9 +53,9 @@ export function PropertyCard({ property }: PropertyCardProps) {
   };
 
   return (
-    <Card className="group relative overflow-hidden bg-card shadow-lg hover:shadow-2xl transition-all duration-500 animate-fade-in hover:scale-[1.02] border-border/50 h-full flex flex-col">
+    <Card className="group relative overflow-hidden bg-card shadow-lg hover:shadow-2xl transition-all duration-500 animate-fade-in hover:scale-[1.02] border-border/50">
       {/* Property Image */}
-      <div className="relative overflow-hidden rounded-t-lg flex-shrink-0">
+      <div className="relative overflow-hidden rounded-t-lg">
         <div className={`aspect-[4/3] bg-muted transition-opacity duration-300 ${imageLoaded ? 'opacity-0' : 'opacity-100'}`} />
         <img
           src={property.image}
@@ -86,9 +86,9 @@ export function PropertyCard({ property }: PropertyCardProps) {
         </div>
       </div>
 
-      <CardContent className="p-4 space-y-4 flex-1 flex flex-col">
+      <CardContent className="p-4 space-y-4">
         {/* Property Info */}
-        <div className="space-y-2 flex-shrink-0">
+        <div className="space-y-2">
           <h3 className="font-semibold text-lg text-foreground leading-tight group-hover:text-primary transition-colors">
             {property.title}
           </h3>
@@ -119,41 +119,39 @@ export function PropertyCard({ property }: PropertyCardProps) {
         </div>
 
         {/* Action Buttons */}
-        <div className="mt-auto space-y-2">
-          <div className="grid grid-cols-2 gap-2">
-            <Button 
-              onClick={handleViewDetails}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-200 hover:scale-105 shadow-button"
-            >
-              <Eye className="w-4 h-4 mr-2" />
-              View Details
-            </Button>
-            <Button 
-              onClick={handleWhatsApp}
-              className="bg-whatsapp hover:bg-whatsapp/90 text-whatsapp-foreground transition-all duration-200 hover:scale-105 shadow-button"
-            >
-              <MessageSquare className="w-4 h-4 mr-2" />
-              WhatsApp
-            </Button>
-          </div>
-          
-          <div className="grid grid-cols-2 gap-2">
-            <Button 
-              variant="outline" 
-              onClick={handleCall}
-              className="transition-all duration-200 hover:scale-105 border-primary/20 hover:border-primary hover:bg-primary/5"
-            >
-              <Phone className="w-4 h-4 mr-2" />
-              Call
-            </Button>
-            <Button 
-              onClick={handleChat}
-              className="bg-accent hover:bg-accent/90 text-accent-foreground transition-all duration-200 hover:scale-105 shadow-button"
-            >
-              <MessageSquare className="w-4 h-4 mr-2" />
-              AI Chat
-            </Button>
-          </div>
+        <div className="grid grid-cols-2 gap-2">
+          <Button 
+            onClick={handleViewDetails}
+            className="bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-200 hover:scale-105 shadow-button"
+          >
+            <Eye className="w-4 h-4 mr-2" />
+            View Details
+          </Button>
+          <Button 
+            onClick={handleWhatsApp}
+            className="bg-whatsapp hover:bg-whatsapp/90 text-whatsapp-foreground transition-all duration-200 hover:scale-105 shadow-button"
+          >
+            <MessageSquare className="w-4 h-4 mr-2" />
+            WhatsApp
+          </Button>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-2">
+          <Button 
+            variant="outline" 
+            onClick={handleCall}
+            className="transition-all duration-200 hover:scale-105 border-primary/20 hover:border-primary hover:bg-primary/5"
+          >
+            <Phone className="w-4 h-4 mr-2" />
+            Call
+          </Button>
+          <Button 
+            onClick={handleChat}
+            className="bg-accent hover:bg-accent/90 text-accent-foreground transition-all duration-200 hover:scale-105 shadow-button"
+          >
+            <MessageSquare className="w-4 h-4 mr-2" />
+            AI Chat
+          </Button>
         </div>
       </CardContent>
     </Card>

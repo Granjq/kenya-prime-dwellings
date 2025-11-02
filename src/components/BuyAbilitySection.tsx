@@ -129,7 +129,7 @@ export function BuyAbilitySection() {
             >
               <CarouselContent className="-ml-2 md:-ml-4">
                 {buyAbilityProperties.map((property, index) => (
-                  <CarouselItem key={property.id} className="pl-2 md:pl-4 basis-full">
+                  <CarouselItem key={property.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/4">
                     <PropertyCardItem property={property} index={index} />
                   </CarouselItem>
                 ))}
@@ -153,11 +153,11 @@ function PropertyCardItem({
 }) {
   return (
     <Card 
-      className="overflow-hidden border border-border/50 rounded-2xl hover:shadow-2xl transition-all duration-600 hover:-translate-y-1 animate-fade-in group cursor-pointer bg-card h-full flex flex-col"
+      className="overflow-hidden border border-border/50 rounded-2xl hover:shadow-2xl transition-all duration-600 hover:-translate-y-1 animate-fade-in group cursor-pointer bg-card"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       {/* Image Container */}
-      <div className="relative aspect-[4/3] overflow-hidden flex-shrink-0">
+      <div className="relative aspect-[4/3] overflow-hidden">
         <img
           src={property.image}
           alt={property.location}
@@ -180,7 +180,7 @@ function PropertyCardItem({
       </div>
 
       {/* Content */}
-      <CardContent className="p-5 space-y-4 flex-1 flex flex-col justify-center">
+      <CardContent className="p-5 space-y-4">
         {/* Placeholder Text Bars */}
         <div className="space-y-2.5">
           <div className="h-2.5 bg-muted/60 rounded-full w-full" />

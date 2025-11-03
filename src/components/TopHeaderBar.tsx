@@ -47,7 +47,7 @@ export function TopHeaderBar() {
   return (
     <div
       className={cn(
-        "w-full bg-muted/50 backdrop-blur-sm border-b border-border/50 transition-all duration-300 ease-in-out fixed top-0 z-50",
+        "w-full bg-muted/50 backdrop-blur-sm border-b border-border/50 transition-all duration-300 ease-in-out fixed top-0 z-[60]",
         isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
       )}
     >

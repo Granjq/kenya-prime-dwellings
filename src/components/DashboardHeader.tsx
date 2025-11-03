@@ -37,22 +37,22 @@ export function DashboardHeader() {
   };
 
   return (
-    <header className="bg-background/95 backdrop-blur-xl border-b border-primary/10 sticky top-10 z-40 shadow-lg">
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-background/95 backdrop-blur-xl border-b border-primary/10 sticky top-0 z-40 shadow-sm">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Left: Hamburger + Logo */}
-          <div className="flex items-center gap-4">
-            <SidebarTrigger className="hover:bg-primary/10 hover:text-primary transition-colors" />
+          <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+            <SidebarTrigger className="hover:bg-primary/10 hover:text-primary transition-colors flex-shrink-0" />
             
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 bg-gradient-hero rounded-lg flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all duration-300">
-                <Home className="w-6 h-6 text-white" />
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-hero rounded-lg flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all duration-300">
+                <Home className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                <h1 className="text-lg sm:text-xl font-bold text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
                   PropertyHub
                 </h1>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground whitespace-nowrap">
                   Find Your Dream Property
                 </p>
               </div>
@@ -60,14 +60,14 @@ export function DashboardHeader() {
           </div>
 
           {/* Right: Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
             {/* Phone */}
             <a
               href="tel:+254700000000"
-              className="hidden md:flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors px-3"
+              className="hidden lg:flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors px-2"
             >
               <Phone className="w-4 h-4" />
-              <span className="text-sm">+254 700 000 000</span>
+              <span className="text-sm whitespace-nowrap">+254 700 000 000</span>
             </a>
 
             {/* Language Selector */}
@@ -79,12 +79,12 @@ export function DashboardHeader() {
                   className="h-9 px-2 text-muted-foreground hover:text-primary hover:bg-primary/10"
                 >
                   <span className="mr-1">{selectedLanguage.flag}</span>
-                  <Globe className="w-4 h-4 md:hidden" />
-                  <span className="hidden md:inline mr-1">{selectedLanguage.name}</span>
+                  <Globe className="w-4 h-4 lg:hidden" />
+                  <span className="hidden lg:inline mr-1 whitespace-nowrap">{selectedLanguage.name}</span>
                   <ChevronDown className="w-3 h-3" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="glass-card border-primary/20">
+              <DropdownMenuContent align="end" className="glass-card border-primary/20 z-50">
                 {languages.map((lang) => (
                   <DropdownMenuItem
                     key={lang.code}
@@ -102,9 +102,9 @@ export function DashboardHeader() {
             <Button
               variant="ghost"
               size="icon"
-              className="hover:bg-primary/10 hover:text-primary transition-colors"
+              className="hover:bg-primary/10 hover:text-primary transition-colors h-9 w-9"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
 
             {/* Notifications */}
@@ -113,9 +113,9 @@ export function DashboardHeader() {
                 variant="ghost"
                 size="icon"
                 onClick={handleNotifications}
-                className="relative hover:bg-primary/10 hover:text-primary transition-colors"
+                className="relative hover:bg-primary/10 hover:text-primary transition-colors h-9 w-9"
               >
-                <Bell className="w-5 h-5" />
+                <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full flex items-center justify-center">
                   <span className="w-1.5 h-1.5 bg-primary-foreground rounded-full"></span>
                 </span>
@@ -127,12 +127,12 @@ export function DashboardHeader() {
               variant="ghost"
               size="icon"
               onClick={toggleTheme}
-              className="hover:bg-primary/10 hover:text-primary transition-colors"
+              className="hover:bg-primary/10 hover:text-primary transition-colors h-9 w-9"
             >
               {theme === "dark" ? (
-                <Sun className="w-5 h-5" />
+                <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
               ) : (
-                <Moon className="w-5 h-5" />
+                <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
               )}
             </Button>
           </div>

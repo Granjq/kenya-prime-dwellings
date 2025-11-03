@@ -6,6 +6,7 @@ import {
   TrendingUp,
   Settings,
   FileText,
+  X,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -66,24 +67,18 @@ export function AppSidebar() {
     <>
       <Sidebar collapsible="icon" className="border-r border-primary/10 z-40">
         <SidebarContent className="bg-background/95 backdrop-blur-xl">
-          {/* Logo Section */}
+          {/* Close Button */}
           <SidebarGroup>
-            <div className="px-4 py-6">
-              <Link to="/" className="flex items-center gap-3 group">
-                <div className="w-10 h-10 bg-gradient-hero rounded-lg flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all duration-300">
-                  <Home className="w-6 h-6 text-white" />
-                </div>
-                {!isCollapsed && (
-                  <div>
-                    <h1 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                      PropertyHub
-                    </h1>
-                    <p className="text-xs text-muted-foreground">
-                      Find Your Dream Property
-                    </p>
-                  </div>
-                )}
-              </Link>
+            <div className="px-4 py-4 flex justify-end">
+              <button
+                onClick={() => {
+                  const trigger = document.querySelector('[data-sidebar="trigger"]') as HTMLButtonElement;
+                  trigger?.click();
+                }}
+                className="p-2 hover:bg-primary/10 rounded-lg transition-colors text-muted-foreground hover:text-primary"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
           </SidebarGroup>
 

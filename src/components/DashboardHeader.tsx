@@ -37,8 +37,8 @@ export function DashboardHeader() {
   };
 
   return (
-    <header className="bg-background/95 backdrop-blur-xl border-b border-primary/10 sticky top-0 z-40 shadow-sm">
-      <div className="w-full px-4 sm:px-6 lg:px-8">
+    <header className="bg-background/95 backdrop-blur-xl border-b border-primary/10 sticky top-10 z-50 shadow-sm transition-all duration-300">
+      <div className="w-full px-4 sm:px-6 lg:px-8 overflow-x-hidden">
         <div className="flex items-center justify-between h-16">
           {/* Left: Hamburger + Logo */}
           <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">

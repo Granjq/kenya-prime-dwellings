@@ -64,7 +64,7 @@ export function AppSidebar() {
 
   return (
     <>
-      <Sidebar collapsible="icon" className="border-r border-primary/10 z-50">
+      <Sidebar collapsible="icon" className="border-r border-primary/10 z-40">
         <SidebarContent className="bg-background/95 backdrop-blur-xl">
           {/* Logo Section */}
           <SidebarGroup>

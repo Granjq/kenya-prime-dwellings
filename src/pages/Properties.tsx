@@ -6,7 +6,10 @@ import { ListingCard } from "@/components/ListingCard";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2 } from "lucide-react";
+import { TopHeaderBar } from "@/components/TopHeaderBar";
 import { DashboardHeader } from "@/components/DashboardHeader";
+import { AppSidebar } from "@/components/AppSidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 const ITEMS_PER_PAGE = 24;
 
@@ -72,78 +75,86 @@ export default function Properties() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <DashboardHeader />
-      
-      <PropertyListingFilters
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        listingType={listingType}
-        setListingType={setListingType}
-        propertyCategory={propertyCategory}
-        setPropertyCategory={setPropertyCategory}
-        totalProperties={allProperties.length}
-        filteredCount={filteredProperties.length}
-      />
+    <SidebarProvider defaultOpen={true}>
+      <div className="min-h-screen flex w-full bg-background">
+        <AppSidebar />
+        <SidebarInset className="flex-1 overflow-x-hidden">
+          <div className="min-h-screen bg-background">
+            <TopHeaderBar />
+            <DashboardHeader />
+            
+            <PropertyListingFilters
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              listingType={listingType}
+              setListingType={setListingType}
+              propertyCategory={propertyCategory}
+              setPropertyCategory={setPropertyCategory}
+              totalProperties={allProperties.length}
+              filteredCount={filteredProperties.length}
+            />
 
-      <div className="container mx-auto px-4 py-8">
-        {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="space-y-3">
-                <Skeleton className="h-48 w-full rounded-t-lg" />
-                <Skeleton className="h-6 w-3/4" />
-                <Skeleton className="h-4 w-1/2" />
-                <Skeleton className="h-8 w-full" />
-              </div>
-            ))}
-          </div>
-        ) : filteredProperties.length === 0 ? (
-          <div className="text-center py-20">
-            <h2 className="text-2xl font-semibold mb-2">No properties found</h2>
-            <p className="text-muted-foreground mb-4">
-              Try adjusting your filters or search term
-            </p>
-            <Button
-              onClick={() => {
-                setSearchTerm("");
-                setListingType("all");
-                setPropertyCategory("all");
-              }}
-            >
-              Clear Filters
-            </Button>
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {displayedProperties.map((property, index) => (
-                <div
-                  key={property.id}
-                  style={{
-                    animationDelay: `${(index % ITEMS_PER_PAGE) * 0.05}s`,
-                  }}
-                >
-                  <ListingCard property={property} />
+            <div className="container mx-auto px-4 py-8">
+              {isLoading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <div key={i} className="space-y-3">
+                      <Skeleton className="h-48 w-full rounded-t-lg" />
+                      <Skeleton className="h-6 w-3/4" />
+                      <Skeleton className="h-4 w-1/2" />
+                      <Skeleton className="h-8 w-full" />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              ) : filteredProperties.length === 0 ? (
+                <div className="text-center py-20">
+                  <h2 className="text-2xl font-semibold mb-2">No properties found</h2>
+                  <p className="text-muted-foreground mb-4">
+                    Try adjusting your filters or search term
+                  </p>
+                  <Button
+                    onClick={() => {
+                      setSearchTerm("");
+                      setListingType("all");
+                      setPropertyCategory("all");
+                    }}
+                  >
+                    Clear Filters
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {displayedProperties.map((property, index) => (
+                      <div
+                        key={property.id}
+                        style={{
+                          animationDelay: `${(index % ITEMS_PER_PAGE) * 0.05}s`,
+                        }}
+                      >
+                        <ListingCard property={property} />
+                      </div>
+                    ))}
+                  </div>
 
-            {hasMore && (
-              <div ref={loadMoreRef} className="flex justify-center py-8">
-                <Button
-                  onClick={handleLoadMore}
-                  size="lg"
-                  className="gap-2"
-                >
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Load More Properties ({filteredProperties.length - displayedItems} remaining)
-                </Button>
-              </div>
-            )}
-          </>
-        )}
+                  {hasMore && (
+                    <div ref={loadMoreRef} className="flex justify-center py-8">
+                      <Button
+                        onClick={handleLoadMore}
+                        size="lg"
+                        className="gap-2"
+                      >
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Load More Properties ({filteredProperties.length - displayedItems} remaining)
+                      </Button>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        </SidebarInset>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }

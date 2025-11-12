@@ -26,13 +26,13 @@ import { ProfileDrawer } from "@/components/ProfileDrawer";
 
 const menuItems = [
   {
-    title: "Properties",
+    title: "Dashboard",
     url: "/",
     icon: Home,
   },
   {
-    title: "Locations",
-    url: "/locations",
+    title: "Properties",
+    url: "/properties",
     icon: MapPin,
   },
   {

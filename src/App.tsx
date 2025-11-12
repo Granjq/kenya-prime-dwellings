@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/hooks/useAuth";
 import Dashboard from "./pages/Dashboard";
+import Properties from "./pages/Properties";
 import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
@@ -27,6 +28,7 @@ const App = () => (
           <AuthProvider>
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/properties" element={<Properties />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/auth/reset" element={<ResetPassword />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

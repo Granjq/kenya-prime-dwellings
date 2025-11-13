@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PropertyImageCarousel } from "./PropertyImageCarousel";
+import { Link } from "react-router-dom";
 import {
   MapPin,
   Bed,
@@ -20,10 +21,6 @@ interface ListingCardProps {
 }
 
 export function ListingCard({ property }: ListingCardProps) {
-  const handleViewDetails = () => {
-    window.open(property.propertyUrl, "_blank");
-  };
-
   const handleWhatsApp = () => {
     const message = `Hi, I'm interested in ${property.title} at ${property.location} for ${property.priceFormatted}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
@@ -93,14 +90,12 @@ export function ListingCard({ property }: ListingCardProps) {
         </div>
 
         <div className="grid grid-cols-2 gap-2 pt-2">
-          <Button
-            onClick={handleViewDetails}
-            className="w-full"
-            variant="default"
-          >
-            <ExternalLink className="w-4 h-4" />
-            View Details
-          </Button>
+          <Link to={`/properties/${property.id}`} className="w-full">
+            <Button className="w-full" variant="default">
+              <ExternalLink className="w-4 h-4" />
+              View Details
+            </Button>
+          </Link>
           <Button
             onClick={handleWhatsApp}
             className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white"

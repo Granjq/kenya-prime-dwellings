@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PropertyContactForm } from "@/components/PropertyContactForm";
+import { SimilarProperties } from "@/components/SimilarProperties";
 import { TopHeaderBar } from "@/components/TopHeaderBar";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { AppSidebar } from "@/components/AppSidebar";
@@ -186,12 +187,17 @@ export default function PropertyDetail() {
                       agentName={property.agentName}
                     />
                   </div>
+                  </div>
                 </div>
               </div>
+
+              {/* Similar Properties Section */}
+              <div className="container mx-auto px-4">
+                <SimilarProperties currentProperty={property} maxItems={6} />
+              </div>
             </div>
-          </div>
-        </SidebarInset>
-      </div>
-    </SidebarProvider>
-  );
-}
+          </SidebarInset>
+        </div>
+      </SidebarProvider>
+    );
+  }

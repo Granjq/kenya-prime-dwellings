@@ -51,3 +51,40 @@ export function getAllProperties(): Property[] {
 
   return [...landForSale, ...houseForSale, ...houseForRent];
 }
+
+export function getSimilarProperties(
+  currentProperty: Property,
+  allProperties: Property[],
+  limit: number = 6
+): Property[] {
+  const scored = allProperties
+    .filter(p => p.id !== currentProperty.id)
+    .map(p => {
+      let score = 0;
+      
+      if (p.category === currentProperty.category) score += 50;
+      if (p.listingType === currentProperty.listingType) score += 30;
+      if (p.location === currentProperty.location) score += 40;
+      
+      const currentLocationWords = currentProperty.location.toLowerCase().split(/[\s,]+/);
+      const propertyLocationWords = p.location.toLowerCase().split(/[\s,]+/);
+      const hasCommonWord = currentLocationWords.some(word => 
+        propertyLocationWords.includes(word) && word.length > 3
+      );
+      if (hasCommonWord && p.location !== currentProperty.location) score += 20;
+      
+      const priceDiff = Math.abs(p.price - currentProperty.price);
+      const priceRange = currentProperty.price * 0.3;
+      if (priceDiff <= priceRange) score += 15;
+      
+      if (p.agentName === currentProperty.agentName) score += 10;
+      
+      return { property: p, score };
+    })
+    .filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(item => item.property);
+  
+  return scored;
+}

@@ -130,12 +130,14 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
               <DropdownMenuItem 
                 onClick={(e) => {
                   e.stopPropagation();
-                  onOpenProfile();
                 }}
                 className="cursor-pointer hover:bg-primary/10 hover:text-primary transition-colors"
+                asChild
               >
-                <Eye className="w-4 h-4 mr-2" />
-                View Profile
+                <Link to="/agents/dashboard?view=profile">
+                  <Eye className="w-4 h-4 mr-2" />
+                  View Profile
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={(e) => {

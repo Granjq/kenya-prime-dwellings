@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 interface UserProfileCardProps {
-  onOpenProfile?: () => void;
+  onOpenProfile: () => void;
 }
 
 export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
@@ -63,7 +63,7 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Link to="/auth?redirect=/agents/dashboard?view=profile" className="p-3 block">
+            <div className="p-3 cursor-pointer" onClick={onOpenProfile}>
               <div className="relative w-12 h-12 mx-auto">
                 <div className="absolute inset-0 bg-gradient-hero rounded-full animate-pulse opacity-50"></div>
                 <Avatar className="relative w-12 h-12 border-2 border-primary/50 ring-2 ring-primary/20 hover:ring-primary/40 transition-all duration-300">
@@ -72,7 +72,7 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
                   </AvatarFallback>
                 </Avatar>
               </div>
-            </Link>
+            </div>
           </TooltipTrigger>
           <TooltipContent side="right" className="glass-card border-primary/20">
             <div className="text-sm">
@@ -87,9 +87,9 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
 
   return (
     <div className="p-3">
-      <Link 
-        to="/auth?redirect=/agents/dashboard?view=profile"
-        className="glass-card glass-hover rounded-xl p-4 border border-primary/20 cursor-pointer transition-all duration-300 block"
+      <div 
+        className="glass-card glass-hover rounded-xl p-4 border border-primary/20 cursor-pointer transition-all duration-300"
+        onClick={onOpenProfile}
       >
         <div className="flex items-center gap-3">
           {/* Avatar */}
@@ -130,14 +130,12 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
               <DropdownMenuItem 
                 onClick={(e) => {
                   e.stopPropagation();
+                  onOpenProfile();
                 }}
                 className="cursor-pointer hover:bg-primary/10 hover:text-primary transition-colors"
-                asChild
               >
-                <Link to="/agents/dashboard?view=profile">
-                  <Eye className="w-4 h-4 mr-2" />
-                  View Profile
-                </Link>
+                <Eye className="w-4 h-4 mr-2" />
+                View Profile
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={(e) => {
@@ -163,7 +161,7 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-      </Link>
+      </div>
     </div>
   );
 }

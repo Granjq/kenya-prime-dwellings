@@ -37,7 +37,7 @@ export function TopHeaderBar() {
     };
 
     if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', controlNavbar, { passive: true });
+      window.addEventListener('scroll', controlNavbar);
       return () => {
         window.removeEventListener('scroll', controlNavbar);
       };
@@ -47,7 +47,7 @@ export function TopHeaderBar() {
   return (
     <div
       className={cn(
-        "w-full bg-background border-b border-border/50 transition-all duration-500 ease-in-out fixed top-0 z-[70] shadow-sm",
+        "w-full bg-muted/50 backdrop-blur-sm border-b border-border/50 transition-all duration-300 ease-in-out fixed top-0 z-[70]",
         isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
       )}
     >

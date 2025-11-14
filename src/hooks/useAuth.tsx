@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: (redirectPath?: string) => void;
+  login: () => void;
   logout: () => void;
   user: { name: string; email: string } | null;
 }
@@ -25,16 +25,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const login = (redirectPath?: string) => {
+  const login = () => {
     const userData = { name: "John Doe", email: "john@example.com" };
     localStorage.setItem("propertyHubSession", JSON.stringify(userData));
     setIsAuthenticated(true);
     setUser(userData);
     
-    // Navigate to redirect path if provided, otherwise go to home
-    const targetPath = redirectPath || "/";
+    // Fade transition handled in Auth component
     setTimeout(() => {
-      navigate(targetPath);
+      navigate("/");
     }, 2000);
   };
 

@@ -82,7 +82,7 @@ export default function Properties() {
           <div className="min-h-screen bg-background">
             <TopHeaderBar />
             <DashboardHeader />
-            <div className="pt-[104px]">
+            
             <PropertyListingFilters
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
@@ -94,7 +94,7 @@ export default function Properties() {
               filteredCount={filteredProperties.length}
             />
 
-            <div className="container mx-auto px-4 py-8 overflow-x-hidden">
+            <div className="container mx-auto px-4 py-8">
               {isLoading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {Array.from({ length: 12 }).map((_, i) => (
@@ -151,7 +151,6 @@ export default function Properties() {
                   )}
                 </>
               )}
-            </div>
             </div>
           </div>
         </SidebarInset>

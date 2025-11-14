@@ -37,8 +37,7 @@ export default function PropertyDetail() {
             <div className="min-h-screen bg-background">
               <TopHeaderBar />
               <DashboardHeader />
-              <div className="pt-[104px]">
-              <div className="container mx-auto px-4 py-8 overflow-x-hidden">
+              <div className="container mx-auto px-4 py-8">
                 <div className="text-center py-20">
                   <h2 className="text-2xl font-semibold mb-2">Property Not Found</h2>
                   <p className="text-muted-foreground mb-4">
@@ -49,7 +48,6 @@ export default function PropertyDetail() {
                     Back to Properties
                   </Button>
                 </div>
-              </div>
               </div>
             </div>
           </SidebarInset>
@@ -68,8 +66,8 @@ export default function PropertyDetail() {
           <div className="min-h-screen bg-background">
             <TopHeaderBar />
             <DashboardHeader />
-            <div className="pt-[104px]">
-            <div className="container mx-auto px-4 py-8 overflow-x-hidden">
+            
+            <div className="container mx-auto px-4 py-8">
               <Button
                 variant="ghost"
                 onClick={() => navigate("/properties")}
@@ -194,9 +192,8 @@ export default function PropertyDetail() {
               </div>
 
               {/* Similar Properties Section */}
-              <div className="container mx-auto px-4 overflow-x-hidden">
+              <div className="container mx-auto px-4">
                 <SimilarProperties currentProperty={property} maxItems={6} />
-              </div>
               </div>
             </div>
           </SidebarInset>

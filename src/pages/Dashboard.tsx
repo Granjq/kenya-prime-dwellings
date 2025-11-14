@@ -165,10 +165,9 @@ export default function Dashboard() {
           <div className="min-h-screen bg-background animate-fade-in">
             <TopHeaderBar />
             <DashboardHeader />
-            <div className="pt-[104px]">
-              <StatsSection />
+            <StatsSection />
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-x-hidden">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-8">
           {/* Filters */}
           <PropertyFilters
@@ -227,7 +226,6 @@ export default function Dashboard() {
         <NewsBlogSection />
             <Footer />
             <ScrollToTop />
-            </div>
           </div>
         </SidebarInset>
       </div>

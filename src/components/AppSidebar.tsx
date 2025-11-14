@@ -8,7 +8,7 @@ import {
   FileText,
   X,
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/sidebar";
 import { UserProfileCard } from "@/components/UserProfileCard";
 import { ProfileDrawer } from "@/components/ProfileDrawer";
+import { useAuth } from "@/hooks/useAuth";
 
 const menuItems = [
   {
@@ -37,8 +38,10 @@ const menuItems = [
   },
   {
     title: "Agents",
-    url: "/agents",
+    url: "/agents/dashboard?view=overview",
+    matchPath: "/agents",
     icon: Users,
+    requiresAgentAccess: true,
   },
   {
     title: "Market Trends",
@@ -59,9 +62,25 @@ const menuItems = [
 
 export function AppSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
   const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
+
+  const handleNavigation = (item: (typeof menuItems)[number]) => {
+    if (item.requiresAgentAccess) {
+      const targetAgentPath = "/agents/dashboard?view=overview";
+      if (!isAuthenticated) {
+        navigate("/auth?redirect=/agents/dashboard?view=overview&mode=agent");
+        return;
+      }
+      navigate(targetAgentPath);
+      return;
+    }
+
+    navigate(item.url);
+  };
 
   return (
     <>
@@ -90,11 +109,12 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {menuItems.map((item) => {
-                  const isActive = location.pathname === item.url;
+                  const activePath = item.matchPath ?? item.url;
+                  const isActive = location.pathname.startsWith(activePath);
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
-                        asChild
+                        onClick={() => handleNavigation(item)}
                         isActive={isActive}
                         className={`
                           transition-all duration-200
@@ -105,10 +125,10 @@ export function AppSidebar() {
                         `}
                         tooltip={isCollapsed ? item.title : undefined}
                       >
-                        <Link to={item.url} className="flex items-center gap-3">
+                        <div className="flex items-center gap-3">
                           <item.icon className={`w-5 h-5 ${isActive ? 'text-primary' : ''}`} />
                           {!isCollapsed && <span>{item.title}</span>}
-                        </Link>
+                        </div>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   );

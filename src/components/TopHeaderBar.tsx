@@ -47,15 +47,9 @@ export function TopHeaderBar() {
   return (
     <div
       className={cn(
-        "w-full bg-background/60 backdrop-blur-xl border-b border-border/50 transition-all duration-500 ease-in-out fixed top-0 z-[70] shadow-sm",
-        "glass-card",
+        "w-full bg-background border-b border-border/50 transition-all duration-500 ease-in-out fixed top-0 z-[70] shadow-sm",
         isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
       )}
-      style={{
-        boxShadow: isVisible 
-          ? "0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1), inset 0 0 20px hsl(var(--primary) / 0.05), 0 0 20px hsl(var(--primary) / 0.1)"
-          : "none"
-      }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-10 text-sm">

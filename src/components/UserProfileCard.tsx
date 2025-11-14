@@ -24,12 +24,12 @@ interface UserProfileCardProps {
 }
 
 export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, signOut } = useAuth();
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await signOut();
     toast.success("Logged out successfully");
   };
 
@@ -53,8 +53,8 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
     );
   }
 
-  const userName = user?.name || "John Doe";
-  const userEmail = user?.email || "john@example.com";
+  const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || "User";
+  const userEmail = user?.email || "user@example.com";
   const userInitials = userName.split(' ').map(n => n[0]).join('');
   const userRole = "Buyer"; // This could come from user data
 

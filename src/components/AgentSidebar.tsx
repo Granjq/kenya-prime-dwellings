@@ -1,0 +1,125 @@
+import { Link, useLocation } from "react-router-dom";
+import { useSidebar } from "@/components/ui/sidebar";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import {
+  LayoutDashboard,
+  User,
+  Home as HomeIcon,
+  Plus,
+  Bell,
+  Settings,
+  ArrowLeft,
+  LogOut,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
+
+const mainItems = [
+  { title: "Dashboard", url: "/agents", icon: LayoutDashboard },
+  { title: "My Profile", url: "/agents/profile", icon: User },
+  { title: "My Listings", url: "/agents/listings", icon: HomeIcon },
+  { title: "Add New Listing", url: "/agents/listings/new", icon: Plus },
+  { title: "Notifications", url: "/agents/notifications", icon: Bell, badge: 3 },
+  { title: "Settings", url: "/agents/settings", icon: Settings },
+];
+
+export function AgentSidebar() {
+  const { state } = useSidebar();
+  const { signOut } = useAuth();
+  const location = useLocation();
+  const isCollapsed = state === "collapsed";
+
+  const handleLogout = async () => {
+    await signOut();
+    toast.success("Logged out successfully");
+  };
+
+  return (
+    <Sidebar className={isCollapsed ? "w-14" : "w-60"}>
+      <SidebarTrigger className="m-2 self-end" />
+
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel className={isCollapsed ? "hidden" : ""}>
+            Agent Dashboard
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {mainItems.map((item) => {
+                const isActive = location.pathname === item.url;
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <Link
+                        to={item.url}
+                        className={cn(
+                          "flex items-center gap-3 hover:bg-primary/10 transition-all",
+                          isActive && "bg-primary/20 border-l-4 border-primary text-primary font-medium"
+                        )}
+                      >
+                        <item.icon className="w-4 h-4" />
+                        {!isCollapsed && (
+                          <>
+                            <span>{item.title}</span>
+                            {item.badge && (
+                              <Badge className="ml-auto bg-primary">
+                                {item.badge}
+                              </Badge>
+                            )}
+                          </>
+                        )}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link
+                    to="/"
+                    className="flex items-center gap-3 hover:bg-muted transition-all"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    {!isCollapsed && <span>Back to Main Site</span>}
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start gap-3 hover:bg-destructive/10 hover:text-destructive"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="w-4 h-4" />
+                    {!isCollapsed && <span>Logout</span>}
+                  </Button>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  );
+}

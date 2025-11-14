@@ -16,7 +16,7 @@ export default function Auth() {
     email: "",
     password: "",
   });
-  const { login, isAuthenticated } = useAuth();
+  const { signIn, signUp, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   // Redirect if already authenticated
@@ -30,17 +30,46 @@ export default function Auth() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Mock login flow
-    setTimeout(() => {
+    try {
+      if (activeTab === "login") {
+        const { error } = await signIn(formData.email, formData.password);
+        
+        if (error) {
+          toast.error(error.message || "Failed to sign in");
+          setIsLoading(false);
+          return;
+        }
+        
+        setShowSuccess(true);
+        setTimeout(() => {
+          toast.success("Successfully logged in!");
+          navigate("/");
+        }, 1500);
+      } else {
+        if (!formData.name) {
+          toast.error("Please enter your full name");
+          setIsLoading(false);
+          return;
+        }
+        
+        const { error } = await signUp(formData.email, formData.password, formData.name);
+        
+        if (error) {
+          toast.error(error.message || "Failed to sign up");
+          setIsLoading(false);
+          return;
+        }
+        
+        setShowSuccess(true);
+        setTimeout(() => {
+          toast.success("Account created successfully!");
+          navigate("/");
+        }, 1500);
+      }
+    } catch (error) {
+      toast.error("An error occurred");
       setIsLoading(false);
-      setShowSuccess(true);
-      
-      // Call login which handles navigation
-      setTimeout(() => {
-        login();
-        toast.success("Successfully logged in!");
-      }, 1500);
-    }, 1500);
+    }
   };
 
   const handleSocialLogin = (provider: string) => {

@@ -32,10 +32,10 @@ interface ProfileDrawerProps {
 }
 
 export function ProfileDrawer({ open, onOpenChange }: ProfileDrawerProps) {
-  const { user, logout } = useAuth();
+  const { user, signOut } = useAuth();
 
-  const userName = user?.name || "John Doe";
-  const userEmail = user?.email || "john@example.com";
+  const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || "User";
+  const userEmail = user?.email || "user@example.com";
   const userInitials = userName.split(' ').map(n => n[0]).join('');
   const joinedDate = "January 2024"; // This could come from user data
   const isVerified = true; // This could come from user data
@@ -46,8 +46,8 @@ export function ProfileDrawer({ open, onOpenChange }: ProfileDrawerProps) {
     reviews: 5
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await signOut();
     onOpenChange(false);
     toast.success("Logged out successfully");
   };

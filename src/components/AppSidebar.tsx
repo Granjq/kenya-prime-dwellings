@@ -120,7 +120,7 @@ export function AppSidebar() {
 
         {/* User Profile Card at Bottom */}
         <SidebarFooter className="mt-auto border-t border-primary/10 bg-background/95 backdrop-blur-xl">
-          <UserProfileCard onOpenProfile={() => setIsProfileDrawerOpen(true)} />
+          <UserProfileCard />
         </SidebarFooter>
       </Sidebar>
 

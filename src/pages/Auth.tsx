@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,13 +18,16 @@ export default function Auth() {
   });
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectPath = searchParams.get("redirect") || "/";
+  const isAgentMode = searchParams.get("mode") === "agent";
 
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      navigate(redirectPath);
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, redirectPath]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,9 +38,9 @@ export default function Auth() {
       setIsLoading(false);
       setShowSuccess(true);
       
-      // Call login which handles navigation
+      // Call login which handles navigation with redirect path
       setTimeout(() => {
-        login();
+        login(redirectPath);
         toast.success("Successfully logged in!");
       }, 1500);
     }, 1500);
@@ -67,6 +70,15 @@ export default function Auth() {
             <Home className="w-8 h-8 text-primary group-hover:text-primary-glow transition-colors" />
             <span className="text-2xl font-bold text-white">PropertyHub</span>
           </Link>
+
+          {/* Agent Mode Notice */}
+          {isAgentMode && (
+            <div className="mb-6 p-4 bg-primary/10 border border-primary/30 rounded-lg text-center animate-fade-in">
+              <p className="text-sm text-primary font-semibold">
+                Join as an Agent - Complete your profile and upload verification documents
+              </p>
+            </div>
+          )}
 
           {/* Glass card */}
           <div className="relative">

@@ -1,7 +1,6 @@
 import { AgentCard } from "./AgentCard";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 // Mock data for Kenyan real estate agents
 const topAgents = [
@@ -48,16 +47,12 @@ const topAgents = [
 ];
 
 export function BestAgentsSection() {
-  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleJoinAsAgent = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (isAuthenticated) {
-      navigate("/agents/dashboard?view=profile");
-    } else {
-      navigate("/auth?redirect=/agents/dashboard?view=profile");
-    }
+    // Always redirect to auth page first, then to agents dashboard
+    navigate("/auth?redirect=/agents/dashboard?view=profile&mode=agent");
   };
 
   const AgentCardWrapper = ({ agent, index }: { agent: typeof topAgents[0]; index: number }) => (

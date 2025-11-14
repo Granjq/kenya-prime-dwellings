@@ -1,5 +1,6 @@
 import { AgentCard } from "./AgentCard";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Link } from "react-router-dom";
 
 // Mock data for Kenyan real estate agents
 const topAgents = [
@@ -106,9 +107,12 @@ export function BestAgentsSection() {
               through KenyaHomes trusted agents. Start your journey today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+              <Link
+                to="/agents/dashboard?view=profile"
+                className="px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 inline-block text-center"
+              >
                 Join as Agent
-              </button>
+              </Link>
               <button className="px-8 py-3 border-2 border-primary/30 hover:border-primary text-foreground hover:bg-primary/10 rounded-lg font-semibold backdrop-blur-sm hover:scale-105 transition-all duration-300">
                 Learn More
               </button>

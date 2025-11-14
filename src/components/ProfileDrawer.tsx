@@ -132,20 +132,22 @@ export function ProfileDrawer({ open, onOpenChange }: ProfileDrawerProps) {
             variant="ghost"
             className="w-full justify-between h-auto py-4 px-4 hover:bg-primary/5 hover:text-primary transition-all group"
             onClick={() => {
-              toast.info("My Listings coming soon!");
               onOpenChange(false);
             }}
+            asChild
           >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <Home className="w-5 h-5 text-primary" />
+            <Link to="/agents/dashboard">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Home className="w-5 h-5 text-primary" />
+                </div>
+                <div className="text-left">
+                  <div className="font-medium">Agent Dashboard</div>
+                  <div className="text-xs text-muted-foreground">Manage your listings & profile</div>
+                </div>
               </div>
-              <div className="text-left">
-                <div className="font-medium">My Listings</div>
-                <div className="text-xs text-muted-foreground">Manage your properties</div>
-              </div>
-            </div>
-            <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+            </Link>
           </Button>
 
           <Button

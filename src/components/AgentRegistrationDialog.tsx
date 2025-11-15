@@ -34,7 +34,9 @@ import {
   Shield,
   Send,
   Loader2,
+  Upload,
 } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface AgentRegistrationDialogProps {
   open: boolean;
@@ -61,6 +63,8 @@ export function AgentRegistrationDialog({
   const [idBackFile, setIdBackFile] = useState<File | null>(null);
   const [idFrontUrl, setIdFrontUrl] = useState("");
   const [idBackUrl, setIdBackUrl] = useState("");
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState("");
 
   const handleIdFrontUpload = (file: File, url: string) => {
     setIdFrontFile(file);
@@ -78,7 +82,22 @@ export function AgentRegistrationDialog({
     setIsSubmitting(true);
 
     try {
-      // 1. Update profile
+      // 1. Upload avatar if provided
+      let finalAvatarUrl = avatarUrl;
+      if (avatarFile) {
+        const avatarPath = `${user.id}/avatar-${Date.now()}.jpg`;
+        const { url: uploadedAvatarUrl, error: avatarError } = await uploadFile(
+          "avatars",
+          avatarPath,
+          avatarFile
+        );
+        
+        if (uploadedAvatarUrl && !avatarError) {
+          finalAvatarUrl = uploadedAvatarUrl;
+        }
+      }
+
+      // 2. Update profile
       const { error: profileError } = await supabase
         .from("profiles")
         .update({
@@ -88,12 +107,13 @@ export function AgentRegistrationDialog({
           county,
           city,
           bio,
+          avatar_url: finalAvatarUrl || null,
         })
         .eq("id", user.id);
 
       if (profileError) throw profileError;
 
-      // 2. Upload ID documents
+      // 3. Upload ID documents
       const idFrontPath = `${user.id}/id-front-${Date.now()}.jpg`;
       const idBackPath = `${user.id}/id-back-${Date.now()}.jpg`;
 
@@ -103,7 +123,7 @@ export function AgentRegistrationDialog({
       const { url: backUrl, error: backError } = await uploadFile("id-documents", idBackPath, idBackFile!);
       if (backError || !backUrl) throw new Error("Failed to upload back ID");
 
-      // 3. Create verification record
+      // 4. Create verification record
       const { error: verificationError } = await supabase
         .from("agent_verifications")
         .insert([{
@@ -115,7 +135,7 @@ export function AgentRegistrationDialog({
 
       if (verificationError) throw verificationError;
 
-      // 4. Add agent role
+      // 5. Add agent role
       const { error: roleError } = await supabase
         .from("user_roles")
         .insert({
@@ -243,6 +263,45 @@ export function AgentRegistrationDialog({
             </DialogHeader>
 
             <div className="space-y-4 py-6">
+              {/* Profile Picture Upload */}
+              <div className="flex flex-col items-center gap-4 py-4">
+                <Avatar className="w-24 h-24">
+                  <AvatarImage src={avatarUrl} />
+                  <AvatarFallback className="text-2xl bg-primary/10">
+                    {fullName?.charAt(0)?.toUpperCase() || "A"}
+                  </AvatarFallback>
+                </Avatar>
+                
+                <div className="text-center">
+                  <input
+                    type="file"
+                    id="avatar-upload-agent"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setAvatarFile(file);
+                        setAvatarUrl(URL.createObjectURL(file));
+                      }
+                    }}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => document.getElementById("avatar-upload-agent")?.click()}
+                  >
+                    <Upload className="w-4 h-4 mr-2" />
+                    Upload Profile Picture
+                  </Button>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    JPG, PNG or WEBP. Max 5MB
+                  </p>
+                </div>
+              </div>
+
+              <Separator className="my-4" />
+
               <div>
                 <Label>Full Name / Agency Name</Label>
                 <Input
@@ -306,18 +365,45 @@ export function AgentRegistrationDialog({
               </div>
 
               <div>
-                <Label>Bio / Description</Label>
+                <Label>
+                  Bio / Description
+                  <span className="text-destructive ml-1">*</span>
+                </Label>
                 <Textarea
                   value={bio}
-                  onChange={(e) => setBio(e.target.value)}
+                  onChange={(e) => {
+                    const newValue = e.target.value;
+                    setBio(newValue);
+                    
+                    // Auto-proceed when reaching max length (300 chars)
+                    if (newValue.length === 300) {
+                      // Check if all required fields are filled
+                      if (fullName && phone && whatsapp && county && city) {
+                        setTimeout(() => setStep(3), 500);
+                      }
+                    }
+                  }}
                   placeholder="Tell us about your experience in real estate..."
                   rows={4}
                   maxLength={300}
                   className="glass-input resize-none"
                 />
-                <p className="text-xs text-muted-foreground text-right mt-1">
-                  {bio.length}/300 characters
-                </p>
+                <div className="flex items-center justify-between mt-1">
+                  <p className={`text-xs ${
+                    bio.length < 250 
+                      ? 'text-destructive' 
+                      : bio.length === 300 
+                        ? 'text-green-500' 
+                        : 'text-muted-foreground'
+                  }`}>
+                    {bio.length < 250 
+                      ? `Minimum 250 characters required (${250 - bio.length} more)` 
+                      : 'Great! ✓'}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {bio.length}/300 characters
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -327,7 +413,7 @@ export function AgentRegistrationDialog({
               </Button>
               <Button
                 onClick={() => setStep(3)}
-                disabled={!fullName || !phone || !whatsapp || !county || !city}
+                disabled={!fullName || !phone || !whatsapp || !county || !city || bio.length < 250}
                 className="bg-primary"
               >
                 Next: Upload Documents

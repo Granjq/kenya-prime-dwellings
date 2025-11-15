@@ -185,6 +185,29 @@ export function AgentRegistrationDialog({
       if (!open) resetForm();
     }}>
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+        {/* Step Progress Indicator */}
+        <div className="flex items-center justify-center gap-2 mb-6 pt-2">
+          {[1, 2, 3, 4].map((stepNumber, index) => (
+            <div key={stepNumber} className="flex items-center">
+              <div className={`
+                w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all
+                ${step >= stepNumber 
+                  ? 'bg-primary text-primary-foreground shadow-md' 
+                  : 'bg-muted text-muted-foreground'
+                }
+              `}>
+                {stepNumber}
+              </div>
+              {index < 3 && (
+                <div className={`
+                  w-12 h-1 mx-1 rounded transition-all
+                  ${step > stepNumber ? 'bg-primary' : 'bg-muted'}
+                `} />
+              )}
+            </div>
+          ))}
+        </div>
+        
         {/* Step 1: Welcome */}
         {step === 1 && (
           <>

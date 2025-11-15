@@ -35,8 +35,10 @@ import {
   Send,
   Loader2,
   Upload,
+  AlertCircle,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface AgentRegistrationDialogProps {
   open: boolean;
@@ -386,22 +388,34 @@ export function AgentRegistrationDialog({
                   placeholder="Tell us about your experience in real estate..."
                   rows={4}
                   maxLength={300}
-                  className="glass-input resize-none"
+                  className={`glass-input resize-none border-2 transition-colors ${
+                    bio.length >= 250 
+                      ? 'border-green-500/50 focus:border-green-500' 
+                      : bio.length > 0 
+                        ? 'border-destructive/50 focus:border-destructive' 
+                        : ''
+                  }`}
                 />
-                <div className="flex items-center justify-between mt-1">
-                  <p className={`text-xs ${
-                    bio.length < 250 
-                      ? 'text-destructive' 
-                      : bio.length === 300 
-                        ? 'text-green-500' 
-                        : 'text-muted-foreground'
-                  }`}>
-                    {bio.length < 250 
-                      ? `Minimum 250 characters required (${250 - bio.length} more)` 
-                      : 'Great! ✓'}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {bio.length}/300 characters
+                <div className="flex items-center justify-between mt-2">
+                  <div className="flex items-center gap-2">
+                    {bio.length < 250 ? (
+                      <>
+                        <AlertCircle className="w-4 h-4 text-destructive" />
+                        <p className="text-sm font-medium text-destructive">
+                          Minimum 250 characters required ({250 - bio.length} more)
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <p className="text-sm font-medium text-green-500">
+                          Great! ✓
+                        </p>
+                      </>
+                    )}
+                  </div>
+                  <p className="text-sm font-semibold text-muted-foreground">
+                    {bio.length}/300
                   </p>
                 </div>
               </div>
@@ -411,13 +425,35 @@ export function AgentRegistrationDialog({
               <Button variant="outline" onClick={() => setStep(1)}>
                 Back
               </Button>
-              <Button
-                onClick={() => setStep(3)}
-                disabled={!fullName || !phone || !whatsapp || !county || !city || bio.length < 250}
-                className="bg-primary"
-              >
-                Next: Upload Documents
-              </Button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="inline-block">
+                      <Button
+                        onClick={() => setStep(3)}
+                        disabled={!fullName || !phone || !whatsapp || !county || !city || bio.length < 250}
+                        className="bg-primary"
+                      >
+                        Next: Upload Documents
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </span>
+                  </TooltipTrigger>
+                  {(!fullName || !phone || !whatsapp || !county || !city || bio.length < 250) && (
+                    <TooltipContent>
+                      <p className="font-medium">Please complete all required fields:</p>
+                      <ul className="text-xs mt-1 space-y-1">
+                        {!fullName && <li>• Full Name</li>}
+                        {!phone && <li>• Phone Number</li>}
+                        {!whatsapp && <li>• WhatsApp Number</li>}
+                        {!county && <li>• County</li>}
+                        {!city && <li>• City/Town</li>}
+                        {bio.length < 250 && <li>• Bio (need {250 - bio.length} more characters)</li>}
+                      </ul>
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </TooltipProvider>
             </DialogFooter>
           </>
         )}

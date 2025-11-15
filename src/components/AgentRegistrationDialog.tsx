@@ -125,7 +125,7 @@ export function AgentRegistrationDialog({
       const { url: backUrl, error: backError } = await uploadFile("id-documents", idBackPath, idBackFile!);
       if (backError || !backUrl) throw new Error("Failed to upload back ID");
 
-      // 4. Create verification record
+      // 4. Create verification record (status: pending, admin will approve)
       const { error: verificationError } = await supabase
         .from("agent_verifications")
         .insert([{
@@ -137,25 +137,15 @@ export function AgentRegistrationDialog({
 
       if (verificationError) throw verificationError;
 
-      // 5. Add agent role
-      const { error: roleError } = await supabase
-        .from("user_roles")
-        .insert({
-          user_id: user.id,
-          role: "agent",
-        });
-
-      if (roleError) throw roleError;
-
-      // Refresh role in auth context
+      // Agent role will be assigned by admin upon approval
       await refreshRole();
 
-      toast.success("Application submitted successfully! Redirecting...");
+      toast.success("Application submitted! Awaiting admin approval...");
       onOpenChange(false);
 
-      // Small delay to ensure state updates
+      // Redirect to home
       setTimeout(() => {
-        navigate("/agents");
+        navigate("/");
       }, 100);
     } catch (error) {
       console.error("Submission error:", error);

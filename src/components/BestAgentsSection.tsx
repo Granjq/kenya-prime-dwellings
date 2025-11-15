@@ -37,6 +37,23 @@ export function BestAgentsSection() {
       setLoading(true);
 
       // Fetch agents with their listing counts
+      // First, get approved agent user IDs
+      const { data: verifiedAgents, error: verError } = await supabase
+        .from('agent_verifications')
+        .select('user_id')
+        .eq('status', 'approved');
+
+      if (verError) throw verError;
+
+      if (!verifiedAgents || verifiedAgents.length === 0) {
+        setAgents([]);
+        setLoading(false);
+        return;
+      }
+
+      const agentIds = verifiedAgents.map(v => v.user_id);
+
+      // Then fetch their profiles
       const { data: agentsData, error } = await supabase
         .from("profiles")
         .select(`
@@ -44,10 +61,9 @@ export function BestAgentsSection() {
           full_name,
           avatar_url,
           county,
-          city,
-          agent_verifications!inner(status)
+          city
         `)
-        .eq("agent_verifications.status", "approved")
+        .in('id', agentIds)
         .limit(10);
 
       if (error) throw error;

@@ -226,6 +226,29 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_approve_agent_verification: {
+        Args: { _verification_id: string }
+        Returns: undefined
+      }
+      admin_approve_listing: {
+        Args: { _listing_id: string }
+        Returns: undefined
+      }
+      admin_assign_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: undefined
+      }
+      admin_reject_agent_verification: {
+        Args: { _reason: string; _verification_id: string }
+        Returns: undefined
+      }
+      admin_reject_listing: {
+        Args: { _listing_id: string; _reason: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

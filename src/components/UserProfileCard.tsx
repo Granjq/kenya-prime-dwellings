@@ -61,6 +61,7 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
   const userEmail = user?.email || "user@example.com";
   const userInitials = userName.split(' ').map(n => n[0]).join('');
   const userRoleDisplay = userRole === "agent" ? "Agent" : userRole === "admin" ? "Admin" : "Buyer";
+  const isAdminUser = userRole === "admin";
 
   if (isCollapsed) {
     return (
@@ -81,7 +82,12 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
           <TooltipContent side="right" className="glass-card border-primary/20">
             <div className="text-sm">
               <p className="font-semibold">{userName}</p>
-              <p className="text-xs text-primary">{userRoleDisplay}</p>
+              <div className="flex items-center gap-1">
+                <p className="text-xs text-primary">{userRoleDisplay}</p>
+                {isAdminUser && (
+                  <span className="text-xs bg-primary/20 px-1.5 py-0.5 rounded">Admin</span>
+                )}
+              </div>
             </div>
           </TooltipContent>
         </Tooltip>
@@ -111,7 +117,15 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
             <p className="text-sm font-semibold text-foreground truncate">
               {userName}
             </p>
-            <p className="text-xs text-primary truncate">
+            <div className="flex items-center gap-1.5">
+              <p className="text-xs text-primary truncate">{userRoleDisplay}</p>
+              {isAdminUser && (
+                <span className="text-xs bg-primary/20 px-1.5 py-0.5 rounded font-medium">
+                  Admin
+                </span>
+              )}
+            </div>
+          </div>
               {userRoleDisplay}
             </p>
           </div>

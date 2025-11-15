@@ -60,7 +60,7 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
   const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || "User";
   const userEmail = user?.email || "user@example.com";
   const userInitials = userName.split(' ').map(n => n[0]).join('');
-  const userRole = "Buyer"; // This could come from user data
+  const userRoleDisplay = userRole === "agent" ? "Agent" : userRole === "admin" ? "Admin" : "Buyer";
 
   if (isCollapsed) {
     return (
@@ -81,7 +81,7 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
           <TooltipContent side="right" className="glass-card border-primary/20">
             <div className="text-sm">
               <p className="font-semibold">{userName}</p>
-              <p className="text-xs text-primary">{userRole}</p>
+              <p className="text-xs text-primary">{userRoleDisplay}</p>
             </div>
           </TooltipContent>
         </Tooltip>
@@ -112,7 +112,7 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
               {userName}
             </p>
             <p className="text-xs text-primary truncate">
-              {userRole}
+              {userRoleDisplay}
             </p>
           </div>
 

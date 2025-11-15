@@ -45,7 +45,7 @@ export function AgentRegistrationDialog({
   open,
   onOpenChange,
 }: AgentRegistrationDialogProps) {
-  const { user } = useAuth();
+  const { user, refreshRole } = useAuth();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -97,8 +97,11 @@ export function AgentRegistrationDialog({
       const idFrontPath = `${user.id}/id-front-${Date.now()}.jpg`;
       const idBackPath = `${user.id}/id-back-${Date.now()}.jpg`;
 
-      const frontUrl = await uploadFile("id-documents", idFrontPath, idFrontFile!);
-      const backUrl = await uploadFile("id-documents", idBackPath, idBackFile!);
+      const { url: frontUrl, error: frontError } = await uploadFile("id-documents", idFrontPath, idFrontFile!);
+      if (frontError || !frontUrl) throw new Error("Failed to upload front ID");
+
+      const { url: backUrl, error: backError } = await uploadFile("id-documents", idBackPath, idBackFile!);
+      if (backError || !backUrl) throw new Error("Failed to upload back ID");
 
       // 3. Create verification record
       const { error: verificationError } = await supabase
@@ -122,9 +125,16 @@ export function AgentRegistrationDialog({
 
       if (roleError) throw roleError;
 
-      toast.success("Application submitted successfully!");
+      // Refresh role in auth context
+      await refreshRole();
+
+      toast.success("Application submitted successfully! Redirecting...");
       onOpenChange(false);
-      navigate("/agents/dashboard");
+
+      // Small delay to ensure state updates
+      setTimeout(() => {
+        navigate("/agents");
+      }, 100);
     } catch (error) {
       console.error("Submission error:", error);
       toast.error("Failed to submit application. Please try again.");

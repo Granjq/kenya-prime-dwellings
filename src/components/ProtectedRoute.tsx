@@ -28,6 +28,15 @@ export function ProtectedRoute({
     return <Navigate to={redirectTo} replace />;
   }
   
+  // If authenticated but role not loaded yet, show loader
+  if (isAuthenticated && !userRole && !loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+  
   if (requiredRole && userRole !== requiredRole && userRole !== 'admin') {
     return <Navigate to="/unauthorized" replace />;
   }

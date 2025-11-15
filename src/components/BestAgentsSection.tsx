@@ -1,60 +1,112 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AgentCard } from "./AgentCard";
 import { AgentRegistrationDialog } from "./AgentRegistrationDialog";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-// Mock data for Kenyan real estate agents
-const topAgents = [
-  {
-    id: "1",
-    name: "Sarah Wanjiku",
-    location: "Westlands, Nairobi",
-    rating: 4.9,
-    reviews: 284,
-    totalListings: 35,
-    priceRange: "KSh 2.5M",
-    specialization: "Luxury Homes",
-  },
-  {
-    id: "2", 
-    name: "James Kimani",
-    location: "Karen, Nairobi",
-    rating: 4.8,
-    reviews: 197,
-    totalListings: 28,
-    priceRange: "KSh 5.2M",
-    specialization: "Family Homes",
-  },
-  {
-    id: "3",
-    name: "Grace Achieng",
-    location: "Kilimani, Nairobi",
-    rating: 4.9,
-    reviews: 156,
-    totalListings: 22,
-    priceRange: "KSh 1.8M",
-    specialization: "Apartments",
-  },
-  {
-    id: "4",
-    name: "David Mwangi",
-    location: "Runda, Nairobi", 
-    rating: 4.7,
-    reviews: 203,
-    totalListings: 31,
-    priceRange: "KSh 8.5M",
-    specialization: "Executive Villas",
-  },
-];
+interface AgentData {
+  id: string;
+  name: string;
+  location: string;
+  rating: number;
+  reviews: number;
+  totalListings: number;
+  priceRange: string;
+  specialization: string;
+  avatar?: string;
+}
 
 export function BestAgentsSection() {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [showRegistration, setShowRegistration] = useState(false);
+  const [agents, setAgents] = useState<AgentData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTopAgents();
+  }, []);
+
+  const fetchTopAgents = async () => {
+    try {
+      setLoading(true);
+
+      // Fetch agents with their listing counts
+      const { data: agentsData, error } = await supabase
+        .from("profiles")
+        .select(`
+          id,
+          full_name,
+          avatar_url,
+          county,
+          city,
+          agent_verifications!inner(status)
+        `)
+        .eq("agent_verifications.status", "approved")
+        .limit(10);
+
+      if (error) throw error;
+
+      if (!agentsData || agentsData.length === 0) {
+        setAgents([]);
+        setLoading(false);
+        return;
+      }
+
+      // For each agent, get their approved listings count
+      const agentsWithListings = await Promise.all(
+        agentsData.map(async (agent) => {
+          const { count } = await supabase
+            .from("agent_listings")
+            .select("*", { count: "exact", head: true })
+            .eq("agent_id", agent.id)
+            .eq("status", "approved");
+
+          // Calculate rating based on verification and listings
+          const listingCount = count || 0;
+          const baseRating = 4.5;
+          const rating = Math.min(5, baseRating + (listingCount > 5 ? 0.4 : listingCount * 0.08));
+          
+          // Calculate reviews (mock based on listings)
+          const reviews = Math.floor(listingCount * 8 + Math.random() * 50);
+
+          // Determine specialization
+          const specializations = ["Luxury Homes", "Family Homes", "Apartments", "Executive Villas", "Commercial", "Land Sales"];
+          const specialization = specializations[Math.floor(Math.random() * specializations.length)];
+
+          return {
+            id: agent.id,
+            name: agent.full_name || "Agent",
+            location: agent.city && agent.county ? `${agent.city}, ${agent.county}` : agent.county || agent.city || "Kenya",
+            rating: parseFloat(rating.toFixed(1)),
+            reviews,
+            totalListings: listingCount,
+            priceRange: `KSh ${(Math.random() * 8 + 1).toFixed(1)}M`,
+            specialization,
+            avatar: agent.avatar_url || undefined,
+          };
+        })
+      );
+
+      // Filter agents with at least 1 listing and sort by listing count
+      const filteredAgents = agentsWithListings
+        .filter(agent => agent.totalListings > 0)
+        .sort((a, b) => b.totalListings - a.totalListings);
+
+      setAgents(filteredAgents);
+    } catch (error) {
+      console.error("Error fetching agents:", error);
+      toast.error("Failed to load agents");
+      setAgents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleJoinClick = () => {
     if (!isAuthenticated) {
@@ -65,7 +117,7 @@ export function BestAgentsSection() {
     setShowRegistration(true);
   };
 
-  const AgentCardWrapper = ({ agent, index }: { agent: typeof topAgents[0]; index: number }) => (
+  const AgentCardWrapper = ({ agent, index }: { agent: AgentData; index: number }) => (
     <div 
       className="animate-scale-in w-full"
       style={{ animationDelay: `${index * 0.1}s` }}
@@ -90,24 +142,41 @@ export function BestAgentsSection() {
 
         {/* Agents Carousel */}
         <div className="relative">
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-              slidesToScroll: 1,
-            }}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {topAgents.map((agent, index) => (
-                <CarouselItem key={agent.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/4">
-                  <AgentCardWrapper agent={agent} index={index} />
-                </CarouselItem>
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map((i) => (
+                <Skeleton key={i} className="h-80 w-full rounded-lg" />
               ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
-            <CarouselNext className="right-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
-          </Carousel>
+            </div>
+          ) : agents.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-lg text-muted-foreground mb-6">
+                No agents available yet. Be the first to join our platform!
+              </p>
+              <Button onClick={handleJoinClick} className="bg-primary hover:bg-primary/90">
+                Become an Agent
+              </Button>
+            </div>
+          ) : (
+            <Carousel
+              opts={{
+                align: "start",
+                loop: agents.length > 4,
+                slidesToScroll: 1,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {agents.map((agent, index) => (
+                  <CarouselItem key={agent.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/4">
+                    <AgentCardWrapper agent={agent} index={index} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
+              <CarouselNext className="right-2 bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background" />
+            </Carousel>
+          )}
         </div>
 
         {/* Enhanced CTA Section */}

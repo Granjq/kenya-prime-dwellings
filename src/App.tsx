@@ -12,6 +12,7 @@ import PropertyDetail from "./pages/PropertyDetail";
 import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import AgentDashboard from "./pages/AgentDashboard";
+import AgentProfile from "./pages/AgentProfile";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
 
@@ -36,6 +37,7 @@ const App = () => (
               <Route path="/properties/:id" element={<PropertyDetail />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/auth/reset" element={<ResetPassword />} />
+              <Route path="/agents/profile/:id" element={<AgentProfile />} />
               <Route
                 path="/agents/*"
                 element={

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,6 +21,8 @@ interface AgentCardProps {
 }
 
 export function AgentCard({ agent }: AgentCardProps) {
+  const navigate = useNavigate();
+
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -32,8 +35,15 @@ export function AgentCard({ agent }: AgentCardProps) {
   const isTopRated = agent.rating >= 4.8;
   const isVerified = agent.reviews >= 50;
 
+  const handleClick = () => {
+    navigate(`/agents/profile/${agent.id}`);
+  };
+
   return (
-    <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 border border-border/50 bg-card/50 backdrop-blur-sm hover:scale-[1.02]">
+    <Card 
+      onClick={handleClick}
+      className="group overflow-hidden hover:shadow-xl transition-all duration-300 border border-border/50 bg-card/50 backdrop-blur-sm hover:scale-[1.02] cursor-pointer"
+    >
       <CardContent className="p-6 relative">
         {/* Top badges */}
         <div className="absolute top-4 left-4 flex flex-wrap gap-1 max-w-[60%] z-10">

@@ -1,5 +1,8 @@
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import { useSidebar } from "@/components/ui/sidebar";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Sidebar,
   SidebarContent,
@@ -38,9 +41,36 @@ const mainItems = [
 
 export function AgentSidebar() {
   const { state } = useSidebar();
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const location = useLocation();
   const isCollapsed = state === "collapsed";
+  const [pendingCount, setPendingCount] = useState(0);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    if (user) fetchCounts();
+  }, [user]);
+
+  const fetchCounts = async () => {
+    try {
+      const { count: pending } = await supabase
+        .from("agent_listings")
+        .select("*", { count: "exact", head: true })
+        .eq("agent_id", user!.id)
+        .eq("status", "pending");
+
+      const { count: unread } = await supabase
+        .from("notifications")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", user!.id)
+        .eq("read", false);
+
+      setPendingCount(pending || 0);
+      setUnreadCount(unread || 0);
+    } catch (error) {
+      console.error("Error fetching counts:", error);
+    }
+  };
 
   const handleLogout = async () => {
     await signOut();
@@ -74,10 +104,11 @@ export function AgentSidebar() {
                         {!isCollapsed && (
                           <>
                             <span>{item.title}</span>
-                            {item.badge && (
-                              <Badge className="ml-auto bg-primary">
-                                {item.badge}
-                              </Badge>
+                            {item.title === "My Listings" && pendingCount > 0 && (
+                              <Badge className="ml-auto bg-yellow-500">{pendingCount}</Badge>
+                            )}
+                            {item.title === "Notifications" && unreadCount > 0 && (
+                              <Badge className="ml-auto bg-primary">{unreadCount}</Badge>
                             )}
                           </>
                         )}

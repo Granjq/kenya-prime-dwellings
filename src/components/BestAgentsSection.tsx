@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { AgentCard } from "./AgentCard";
+import { AgentRegistrationDialog } from "./AgentRegistrationDialog";
+import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 // Mock data for Kenyan real estate agents
@@ -46,6 +49,8 @@ const topAgents = [
 ];
 
 export function BestAgentsSection() {
+  const [showRegistration, setShowRegistration] = useState(false);
+
   const AgentCardWrapper = ({ agent, index }: { agent: typeof topAgents[0]; index: number }) => (
     <div 
       className="animate-scale-in w-full"
@@ -106,16 +111,27 @@ export function BestAgentsSection() {
               through KenyaHomes trusted agents. Start your journey today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+              <Button 
+                onClick={() => setShowRegistration(true)}
+                className="px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-105"
+              >
                 Join as Agent
-              </button>
-              <button className="px-8 py-3 border-2 border-primary/30 hover:border-primary text-foreground hover:bg-primary/10 rounded-lg font-semibold backdrop-blur-sm hover:scale-105 transition-all duration-300">
+              </Button>
+              <Button 
+                variant="outline"
+                className="px-8 py-3 border-2 border-primary/30 hover:border-primary hover:bg-primary/10 font-semibold hover:scale-105 transition-all"
+              >
                 Learn More
-              </button>
+              </Button>
             </div>
           </div>
         </div>
       </div>
+
+      <AgentRegistrationDialog 
+        open={showRegistration}
+        onOpenChange={setShowRegistration}
+      />
     </section>
   );
 }

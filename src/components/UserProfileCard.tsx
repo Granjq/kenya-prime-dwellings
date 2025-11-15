@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { AgentRegistrationDialog } from "@/components/AgentRegistrationDialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,9 +26,11 @@ interface UserProfileCardProps {
 }
 
 export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
-  const { user, isAuthenticated, signOut } = useAuth();
+  const { user, userRole, isAuthenticated, signOut } = useAuth();
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
+  const [showRegistration, setShowRegistration] = useState(false);
+  const isAgent = userRole === "agent" || userRole === "admin";
 
   const handleLogout = async () => {
     await signOut();
@@ -144,10 +148,21 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
                 }}
                 className="cursor-pointer hover:bg-primary/10 hover:text-primary transition-colors"
               >
-                <Edit className="w-4 h-4 mr-2" />
-                Edit Profile
-              </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-border/50" />
+              <Edit className="w-4 h-4 mr-2" />
+              Edit Profile
+            </DropdownMenuItem>
+            {!isAgent && (
+              <>
+                <DropdownMenuItem onClick={(e) => {
+                  e.stopPropagation();
+                  setShowRegistration(true);
+                }}>
+                  <Edit className="w-4 h-4 mr-2" />
+                  Become an Agent
+                </DropdownMenuItem>
+              </>
+            )}
+            <DropdownMenuSeparator className="bg-border/50" />
               <DropdownMenuItem 
                 onClick={(e) => {
                   e.stopPropagation();
@@ -162,6 +177,11 @@ export function UserProfileCard({ onOpenProfile }: UserProfileCardProps) {
           </DropdownMenu>
         </div>
       </div>
+
+      <AgentRegistrationDialog
+        open={showRegistration}
+        onOpenChange={setShowRegistration}
+      />
     </div>
   );
 }

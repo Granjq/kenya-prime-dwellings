@@ -165,6 +165,7 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string
+          notification_preferences: Json | null
           phone: string | null
           town: string | null
           updated_at: string | null
@@ -179,6 +180,7 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id: string
+          notification_preferences?: Json | null
           phone?: string | null
           town?: string | null
           updated_at?: string | null
@@ -193,6 +195,7 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          notification_preferences?: Json | null
           phone?: string | null
           town?: string | null
           updated_at?: string | null

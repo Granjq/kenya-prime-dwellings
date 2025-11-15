@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AgentCard } from "./AgentCard";
 import { AgentRegistrationDialog } from "./AgentRegistrationDialog";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 // Mock data for Kenyan real estate agents
 const topAgents = [
@@ -49,7 +52,18 @@ const topAgents = [
 ];
 
 export function BestAgentsSection() {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const [showRegistration, setShowRegistration] = useState(false);
+
+  const handleJoinClick = () => {
+    if (!isAuthenticated) {
+      toast.info("Please sign in first to become an agent");
+      navigate("/auth");
+      return;
+    }
+    setShowRegistration(true);
+  };
 
   const AgentCardWrapper = ({ agent, index }: { agent: typeof topAgents[0]; index: number }) => (
     <div 
@@ -112,7 +126,7 @@ export function BestAgentsSection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
-                onClick={() => setShowRegistration(true)}
+                onClick={handleJoinClick}
                 className="px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-105"
               >
                 Join as Agent
